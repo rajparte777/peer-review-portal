@@ -3,26 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Submit Project</title>
+
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
-<h2>Submit Your Project</h2>
+<nav class="navbar">
+<h2>PeerReview</h2>
+</nav>
+
+<div class="form-container">
+
+<h2>Submit Project</h2>
 
 <form action="SubmitProjectServlet" method="post">
 
 <input type="text" name="title" placeholder="Project Title" required>
 
-<textarea name="description" placeholder="Project Description"></textarea>
-
 <input type="text" name="github" placeholder="GitHub Link">
+
+<textarea name="description" placeholder="Project Description"></textarea>
 
 <input type="email" name="email" placeholder="Your Email">
 
-<button type="submit">Submit Project</button>
+<button type="submit">Submit</button>
 
 </form>
+
+</div>
 
 </body>
 </html>
