@@ -18,7 +18,7 @@
 
 <h2>Submit Project</h2>
 
-<form action="SubmitProjectServlet" method="post">
+<form action="SubmitProjectServlet" method="post" enctype="multipart/form-data">
 
 <input type="text" name="title" placeholder="Project Title" required>
 
@@ -28,10 +28,20 @@
 
 <input type="email" name="email" placeholder="Your Email">
 
-<button type="submit">Submit</button>
+<label>Upload Image 1</label>
+<input type="file" name="image1">
+
+<label>Upload Image 2</label>
+<input type="file" name="image2">
+
+<label>Upload Demo Video</label>
+<input type="file" name="video">
+
+
+    <a href="viewProjects.jsp"><button type="submit">Submit</button></a>
+
 
 </form>
-
 </div>
 
 </body>

@@ -11,64 +11,72 @@ import com.peerreview.util.DBConnection;
 
 public class ProjectDAO {
 
-	public void addProject(Project project) {
+    public void addProject(Project project) {
 
-		try {
+        try {
 
-			Connection conn = DBConnection.getConnection();
+            Connection conn = DBConnection.getConnection();
 
-			String sql = "INSERT INTO projects(title,description,github_link,student_email) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO projects(title,description,github_link,student_email,image1,image2,video) VALUES(?,?,?,?,?,?,?)";
 
-			PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-			ps.setString(1, project.getTitle());
-			ps.setString(2, project.getDescription());
-			ps.setString(3, project.getGithubLink());
-			ps.setString(4, project.getStudentEmail());
+            ps.setString(1, project.getTitle());
+            ps.setString(2, project.getDescription());
+            ps.setString(3, project.getGithubLink());
+            ps.setString(4, project.getStudentEmail());
+            ps.setString(5, project.getImage1());
+            ps.setString(6, project.getImage2());
+            ps.setString(7, project.getVideo());
 
-			ps.executeUpdate();
+            ps.executeUpdate();
 
-			System.out.println("Project Added");
+            System.out.println("Project Added");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
-	
-	
-	/*2nd method  for view*/
-	public List<Project> getAllProjects(){
+    }
 
-	    List<Project> projects = new ArrayList<>();
+    /* VIEW PROJECTS */
 
-	    try{
+    public List<Project> getAllProjects() {
 
-	        Connection conn = DBConnection.getConnection();
+        List<Project> projects = new ArrayList<>();
 
-	        String sql = "SELECT * FROM projects";
+        try {
 
-	        PreparedStatement ps = conn.prepareStatement(sql);
+            Connection conn = DBConnection.getConnection();
 
-	        ResultSet rs = ps.executeQuery();
+            String sql = "SELECT * FROM projects";
 
-	        while(rs.next()){
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-	            Project p = new Project();
+            ResultSet rs = ps.executeQuery();
 
-	            p.setId(rs.getInt("id"));
-	            p.setTitle(rs.getString("title"));
-	            p.setDescription(rs.getString("description"));
-	            p.setGithubLink(rs.getString("github_link"));
-	            p.setStudentEmail(rs.getString("student_email"));
+            while (rs.next()) {
 
-	            projects.add(p);
-	        }
+                Project p = new Project();
 
-	    }catch(Exception e){
-	        e.printStackTrace();
-	    }
+                p.setId(rs.getInt("id"));
+                p.setTitle(rs.getString("title"));
+                p.setDescription(rs.getString("description"));
+                p.setGithubLink(rs.getString("github_link"));
+                p.setStudentEmail(rs.getString("student_email"));
 
-	    return projects;
-	}
+                /* IMPORTANT FOR MEDIA */
+                p.setImage1(rs.getString("image1"));
+                p.setImage2(rs.getString("image2"));
+                p.setVideo(rs.getString("video"));
+
+                projects.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
 }
