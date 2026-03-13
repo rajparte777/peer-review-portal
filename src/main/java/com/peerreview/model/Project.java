@@ -1,78 +1,62 @@
 package com.peerreview.model;
 
+import java.util.List;
+
 public class Project {
 
-	private int id;
-	private String title;
-	private String description;
-	private String githubLink;
-	private String studentEmail;
-	
-	public String getImage1() {
-		return image1;
-	}
+    private int id;
+    private String title;
+    private String description;
+    private String githubLink;
+    private String studentEmail;
 
-	public void setImage1(String image1) {
-		this.image1 = image1;
-	}
+    private List<String[]> mediaList; // [file_name, media_type]
 
-	public String getImage2() {
-		return image2;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setImage2(String image2) {
-		this.image2 = image2;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getVideo() {
-		return video;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setVideo(String video) {
-		this.video = video;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	private String image1;
-	private String image2;
-	private String video;
+    public String getDescription() {
+        return description;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getGithubLink() {
+        return githubLink;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setGithubLink(String githubLink) {
+        this.githubLink = githubLink;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getStudentEmail() {
+        return studentEmail;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public List<String[]> getMediaList() {
+        return mediaList;
+    }
 
-	public String getGithubLink() {
-		return githubLink;
-	}
-
-	public void setGithubLink(String githubLink) {
-		this.githubLink = githubLink;
-	}
-
-	public String getStudentEmail() {
-		return studentEmail;
-	}
-
-	public void setStudentEmail(String studentEmail) {
-		this.studentEmail = studentEmail;
-	}
+    public void setMediaList(List<String[]> mediaList) {
+        this.mediaList = mediaList;
+    }
 }

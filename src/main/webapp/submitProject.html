@@ -19,28 +19,19 @@
 <h2>Submit Project</h2>
 
 <form action="SubmitProjectServlet" method="post" enctype="multipart/form-data">
+    
+    <input type="text" name="title" placeholder="Project Title" required>
+    
+    <textarea name="description" placeholder="Description" required></textarea>
+    
+    <input type="url" name="github" placeholder="GitHub Link" required>
+    
+    <input type="email" name="email" placeholder="Your Email" required>
 
-<input type="text" name="title" placeholder="Project Title" required>
+    <label>Upload Images / Video</label>
+ <input type="file" name="mediaFiles" multiple accept="image/*,video/*">
 
-<input type="text" name="github" placeholder="GitHub Link">
-
-<textarea name="description" placeholder="Project Description"></textarea>
-
-<input type="email" name="email" placeholder="Your Email">
-
-<label>Upload Image 1</label>
-<input type="file" name="image1">
-
-<label>Upload Image 2</label>
-<input type="file" name="image2">
-
-<label>Upload Demo Video</label>
-<input type="file" name="video">
-
-
-    <a href="viewProjects.jsp"><button type="submit">Submit</button></a>
-
-
+    <button type="submit">Submit Project</button>
 </form>
 </div>
 

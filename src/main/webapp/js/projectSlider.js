@@ -1,97 +1,155 @@
 /* =========================
    SLIDER FUNCTION
 ========================= */
-const slide = (button, direction) => {
-    const slider = button.parentElement;
+function slide(button, direction) {
+    const slider = button.closest(".slider");
     const track = slider.querySelector(".slider-track");
-    const width = slider.offsetWidth;
+    const item = track.querySelector(".media-item");
+
+    if (!item) return;
+
+    const width = item.offsetWidth + 10; // 10 = gap safety
 
     track.scrollBy({
         left: direction * width,
         behavior: "smooth"
     });
 
-    setTimeout(() => updateDots(slider), 300);
-};
+    setTimeout(() => {
+        updateDots(slider);
+    }, 350);
+}
 
 
 /* =========================
    UPDATE DOT INDICATOR
 ========================= */
-const updateDots = slider => {
+function updateDots(slider) {
     const track = slider.querySelector(".slider-track");
+    const items = slider.querySelectorAll(".media-item");
     const dots = slider.querySelectorAll(".dot");
-    const width = slider.offsetWidth;
 
-    const index = Math.round(track.scrollLeft / width);
+    if (!items.length || !dots.length) return;
+
+    const itemWidth = items[0].offsetWidth + 10;
+    const index = Math.round(track.scrollLeft / itemWidth);
 
     dots.forEach(dot => dot.classList.remove("active"));
 
-    if (dots[index]) dots[index].classList.add("active");
-};
+    if (dots[index]) {
+        dots[index].classList.add("active");
+    }
+}
 
 
 /* =========================
    CLICK DOT → MOVE SLIDE
 ========================= */
-const goToSlide = (slider, index) => {
+function goToSlide(slider, index) {
     const track = slider.querySelector(".slider-track");
-    const width = slider.offsetWidth;
+    const items = slider.querySelectorAll(".media-item");
+
+    if (!items.length) return;
+
+    const itemWidth = items[0].offsetWidth + 10;
 
     track.scrollTo({
-        left: index * width,
+        left: index * itemWidth,
         behavior: "smooth"
     });
 
-    updateDots(slider);
-};
+    setTimeout(() => {
+        updateDots(slider);
+    }, 350);
+}
 
 
 /* =========================
    IMAGE POPUP
 ========================= */
-const openPopup = src => {
+function openPopup(src) {
     const popup = document.getElementById("popup");
     const popupImg = document.getElementById("popupImg");
 
+    if (!popup || !popupImg) return;
+
     popup.style.display = "flex";
     popupImg.src = src;
-};
+}
 
 
 /* =========================
    CLOSE POPUP
 ========================= */
-const closePopup = () => {
+function closePopup() {
     const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+
+    if (!popup || !popupImg) return;
+
     popup.style.display = "none";
-};
+    popupImg.src = "";
+}
 
 
 /* =========================
-   INITIALIZE DOTS
+   INITIALIZE SLIDERS
 ========================= */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     const sliders = document.querySelectorAll(".slider");
 
     sliders.forEach(slider => {
         const track = slider.querySelector(".slider-track");
-        const items = track.children;
+        const items = slider.querySelectorAll(".media-item");
         const dotsContainer = slider.querySelector(".dots");
+        const leftArrow = slider.querySelector(".arrow.left");
+        const rightArrow = slider.querySelector(".arrow.right");
 
-        if (!dotsContainer) return;
+        if (!track || !dotsContainer) return;
 
-        Array.from(items).forEach((_, i) => {
+        // Clear old dots first (important if page reload/forward/back)
+        dotsContainer.innerHTML = "";
+
+        // If only 0 or 1 media item, hide arrows and dots
+        if (items.length <= 1) {
+            if (leftArrow) leftArrow.style.display = "none";
+            if (rightArrow) rightArrow.style.display = "none";
+            dotsContainer.style.display = "none";
+            return;
+        }
+
+        // Create dots
+        items.forEach((item, i) => {
             const dot = document.createElement("span");
             dot.classList.add("dot");
-            if (i === 0) dot.classList.add("active");
 
-            // Use closure to safely capture the slider and index
-            dot.addEventListener("click", () => {
+            if (i === 0) {
+                dot.classList.add("active");
+            }
+
+            dot.addEventListener("click", function () {
                 goToSlide(slider, i);
             });
 
             dotsContainer.appendChild(dot);
         });
+
+        // Update dots when user manually scrolls
+        track.addEventListener("scroll", function () {
+            updateDots(slider);
+        });
     });
+
+    /* =========================
+       CLOSE POPUP ON OUTSIDE CLICK
+    ========================= */
+    const popup = document.getElementById("popup");
+
+    if (popup) {
+        popup.addEventListener("click", function (e) {
+            if (e.target.id === "popup") {
+                closePopup();
+            }
+        });
+    }
 });
