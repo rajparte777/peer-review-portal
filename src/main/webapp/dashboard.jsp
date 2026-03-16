@@ -1,3 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+
+<%
+String email = (String) session.getAttribute("userEmail");
+
+if(email == null){
+    response.sendRedirect("login.html");
+    return;
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +27,9 @@
 
 <ul>
 <li><a href="submitProject.html">Submit Project</a></li>
+<li><a href="myProjects">My Projects</a></li>
 <li><a href="viewProjects">View Projects</a></li>
-<li><a href="login.html">Logout</a></li>
+<li><a href="LogoutServlet">Logout</a></li>
 </ul>
 </nav>
 
@@ -25,7 +38,7 @@
 
 <section class="dashboard">
 
-<h1>Welcome to Peer Review Portal</h1>
+<h1>Welcome <%= session.getAttribute("userName") %></h1>
 <p>Manage your projects and reviews</p>
 
 <div class="cards">
@@ -34,6 +47,12 @@
 <h3>Submit Project</h3>
 <p>Upload your project for review</p>
 <a href="submitProject.html">Submit</a>
+</div>
+
+<div class="card">
+<h3>My Projects</h3>
+<p>See projects uploaded by you</p>
+<a href="myProjects">View</a>
 </div>
 
 <div class="card">

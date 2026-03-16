@@ -79,6 +79,6 @@ public class SubmitProjectServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("dashboard.html");
+        response.sendRedirect("dashboard.jsp");
     }
 }

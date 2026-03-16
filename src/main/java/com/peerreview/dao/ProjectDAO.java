@@ -71,7 +71,7 @@ public class ProjectDAO {
         try {
             Connection conn = DBConnection.getConnection();
 
-            String sql = "SELECT * FROM projects";
+            String sql = "SELECT * FROM projects ORDER BY id DESC";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -87,6 +87,79 @@ public class ProjectDAO {
                 p.setStudentEmail(rs.getString("student_email"));
 
                 // load media list
+                p.setMediaList(getMediaByProjectId(p.getId()));
+
+                projects.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
+
+    // GET PROJECTS BY USER EMAIL
+    public List<Project> getProjectsByEmail(String email) {
+
+        List<Project> projects = new ArrayList<>();
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM projects WHERE student_email = ? ORDER BY id DESC";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Project p = new Project();
+
+                p.setId(rs.getInt("id"));
+                p.setTitle(rs.getString("title"));
+                p.setDescription(rs.getString("description"));
+                p.setGithubLink(rs.getString("github_link"));
+                p.setStudentEmail(rs.getString("student_email"));
+
+                // load media list
+                p.setMediaList(getMediaByProjectId(p.getId()));
+
+                projects.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
+
+    // OPTIONAL - GET OTHER USERS PROJECTS
+    public List<Project> getOtherProjects(String email) {
+
+        List<Project> projects = new ArrayList<>();
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM projects WHERE student_email <> ? ORDER BY id DESC";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Project p = new Project();
+
+                p.setId(rs.getInt("id"));
+                p.setTitle(rs.getString("title"));
+                p.setDescription(rs.getString("description"));
+                p.setGithubLink(rs.getString("github_link"));
+                p.setStudentEmail(rs.getString("student_email"));
+
                 p.setMediaList(getMediaByProjectId(p.getId()));
 
                 projects.add(p);

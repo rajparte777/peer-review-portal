@@ -25,15 +25,24 @@ public class LoginServlet extends HttpServlet {
         boolean status = dao.loginUser(email, password);
 
         if (status) {
+
             HttpSession session = request.getSession();
+
+            // store email in session
             session.setAttribute("userEmail", email);
 
+            // get user name
             String userName = dao.getUserNameByEmail(email);
             session.setAttribute("userName", userName);
 
-            response.sendRedirect("dashboard.html");
+            // redirect to dashboard
+            response.sendRedirect("dashboard.jsp?msg=success");
+
         } else {
-            response.getWriter().println("<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Email or Password! <a href='login.html'>Try Again</a></h3>");
+
+            response.getWriter().println(
+                    "<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Email or Password! <a href='login.html'>Try Again</a></h3>");
+
         }
     }
 }

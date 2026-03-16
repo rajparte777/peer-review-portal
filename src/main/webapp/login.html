@@ -14,16 +14,17 @@
 <div class="form-container">
     <h2>Login</h2>
 
-    <form action="LoginServlet" method="post">
-        <label>Email</label>
-        <input type="email" name="email" required autocomplete="email">
+   <form action="LoginServlet" method="post" autocomplete="off">
 
-        <label>Password</label>
-        <input type="password" name="password" required autocomplete="current-password">
+    <label>Email</label>
+    <input type="email" name="email" autocomplete="off" required>
 
-        <button type="submit">Login</button>
-    </form>
+    <label>Password</label>
+    <input type="password" name="password" autocomplete="new-password" required>
 
+    <button type="submit">Login</button>
+
+</form>
     <p style="margin-top:15px; text-align:center;">
         Don't have an account? <a href="register.html">Register</a>
     </p>
