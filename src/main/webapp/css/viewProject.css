@@ -251,7 +251,22 @@ video.media-item {
     font-weight: bold;
     user-select: none;
 }
+.action-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
 
+.action-btn:hover {
+    background: #1d4ed8;
+}
 
 /* =========================
    NO MEDIA MESSAGE
@@ -264,6 +279,52 @@ video.media-item {
 }
 
 
+
+.project-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 10px;
+}
+
+.project-section textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}
+
+.project-section select {
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.project-section button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.project-section button:hover {
+    background: #1d4ed8;
+}
+
+.comment-box,
+.review-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: white;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+}
 /* =========================
    RESPONSIVE
 ========================= */

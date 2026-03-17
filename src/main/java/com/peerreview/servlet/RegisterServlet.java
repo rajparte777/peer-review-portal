@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
 
             EmailUtility.sendEmail(adminEmail, subject, message);
 
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.jsp");
 
         } else {
             response.getWriter().println("<h3 style='color:red; text-align:center; margin-top:50px;'>Registration failed! <a href='register.html'>Try Again</a></h3>");

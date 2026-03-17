@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 String email = (String) session.getAttribute("userEmail");
 
 if(email == null){
-    response.sendRedirect("login.html");
+    response.sendRedirect("login.jsp");
     return;
 }
 %>

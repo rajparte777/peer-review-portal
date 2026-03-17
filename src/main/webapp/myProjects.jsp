@@ -2,6 +2,7 @@
 pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List"%>
+<%@ page import="java.net.URLEncoder"%>
 <%@ page import="com.peerreview.model.Project"%>
 
 <!DOCTYPE html>
@@ -27,7 +28,6 @@ if(projects != null && !projects.isEmpty()){
     <h2><%= p.getTitle() %></h2>
     <p><%= p.getDescription() %></p>
 
-    <!-- MEDIA SLIDER -->
     <div class="slider">
         <button class="arrow left" onclick="slide(this,-1)">❮</button>
 
@@ -38,17 +38,18 @@ if(projects != null && !projects.isEmpty()){
                 for (String[] media : mediaList) {
                     String fileName = media[0];
                     String mediaType = media[1];
+                    String encodedFile = URLEncoder.encode(fileName, "UTF-8");
 
                     if ("image".equalsIgnoreCase(mediaType)) {
             %>
                         <img class="media-item"
-                             src="<%=request.getContextPath()%>/uploads/<%=fileName%>"
+                             src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
                              onclick="openPopup(this.src)">
             <%
                     } else if ("video".equalsIgnoreCase(mediaType)) {
             %>
                         <video class="media-item" controls>
-                            <source src="<%=request.getContextPath()%>/uploads/<%=fileName%>">
+                            <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
                         </video>
             <%
                     }
@@ -67,8 +68,15 @@ if(projects != null && !projects.isEmpty()){
     <p><b>Submitted by:</b> <%= p.getStudentEmail() %></p>
 
     <div class="actions">
-        <button>✏ Edit</button>
-        <button>🗑 Delete</button>
+        <a href="editProject?id=<%= p.getId() %>" class="action-btn">✏ Edit</a>
+
+        <form action="deleteProject" method="post" style="display:inline;">
+            <input type="hidden" name="projectId" value="<%= p.getId() %>">
+            <button type="submit" class="action-btn"
+                    onclick="return confirm('Are you sure you want to delete this project?');">
+                🗑 Delete
+            </button>
+        </form>
     </div>
 
 </div>
@@ -84,7 +92,6 @@ if(projects != null && !projects.isEmpty()){
 }
 %>
 
-<!-- IMAGE POPUP -->
 <div id="popup" class="popup">
     <span onclick="closePopup()">✖</span>
     <img id="popupImg">

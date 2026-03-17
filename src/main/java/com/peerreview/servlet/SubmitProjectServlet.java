@@ -13,72 +13,96 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/SubmitProjectServlet")
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024 * 2,   // 2MB
-    maxFileSize = 1024 * 1024 * 50,        // 50MB per file
-    maxRequestSize = 1024 * 1024 * 200     // 200MB total
+    fileSizeThreshold = 1024 * 1024 * 2,
+    maxFileSize = 1024 * 1024 * 50,
+    maxRequestSize = 1024 * 1024 * 200
 )
 public class SubmitProjectServlet extends HttpServlet {
-
     private static final long serialVersionUID = 1L;
+
+    private static final String UPLOAD_DIR = "C:/peerreview_uploads";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Absolute upload folder inside deployed app
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+        HttpSession session = request.getSession(false);
 
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
+        if (session == null || session.getAttribute("userEmail") == null) {
+            response.sendRedirect("login.jsp");
+            return;
         }
 
-        /* -------- FORM DATA -------- */
+        String email = (String) session.getAttribute("userEmail");
+
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String github = request.getParameter("github");
-        String email = request.getParameter("email");
 
-        /* -------- PROJECT OBJECT -------- */
         Project project = new Project();
         project.setTitle(title);
         project.setDescription(description);
         project.setGithubLink(github);
         project.setStudentEmail(email);
 
-        /* -------- SAVE PROJECT FIRST -------- */
         ProjectDAO dao = new ProjectDAO();
-        int projectId = dao.addProject(project);   // must return generated project id
+        int projectId = dao.addProject(project);
 
-        System.out.println("Project Added with ID: " + projectId);
+        if (projectId > 0) {
 
-        /* -------- SAVE MULTIPLE FILES -------- */
-        Collection<Part> parts = request.getParts();
+            File uploadFolder = new File(UPLOAD_DIR);
+            if (!uploadFolder.exists()) {
+                uploadFolder.mkdirs();
+            }
 
-        for (Part part : parts) {
-            if ("mediaFiles".equals(part.getName()) && part.getSize() > 0) {
-            	System.out.println("Part Name: " + part.getName() + " | File: " + part.getSubmittedFileName());
-                String fileName = part.getSubmittedFileName();
+            Collection<Part> parts = request.getParts();
 
-                if (fileName != null && !fileName.trim().isEmpty()) {
+            for (Part part : parts) {
+                if ("mediaFiles".equals(part.getName()) && part.getSize() > 0) {
 
-                    String uniqueFileName = System.currentTimeMillis() + "_" + fileName.replaceAll("\\s+", "_");
+                    String originalFileName = getFileName(part);
 
-                    part.write(uploadPath + File.separator + uniqueFileName);
+                    if (originalFileName != null && !originalFileName.isEmpty()) {
 
-                    String contentType = part.getContentType();
-                    String mediaType = (contentType != null && contentType.startsWith("video")) ? "video" : "image";
+                        String fileName = System.currentTimeMillis() + "_" + originalFileName;
+                        String filePath = UPLOAD_DIR + File.separator + fileName;
 
-                    dao.addProjectMedia(projectId, uniqueFileName, mediaType);
+                        part.write(filePath);
 
-                    System.out.println("Saved: " + uniqueFileName + " | " + mediaType);
+                        String contentType = part.getContentType();
+                        String mediaType = "image";
+
+                        if (contentType != null && contentType.startsWith("video")) {
+                            mediaType = "video";
+                        }
+
+                        dao.addProjectMedia(projectId, fileName, mediaType);
+                    }
+                }
+            }
+
+            response.sendRedirect("dashboard.jsp");
+        } else {
+            response.getWriter().println("<h3>Project submission failed!</h3>");
+        }
+    }
+
+    private String getFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+
+        if (contentDisp != null) {
+            String[] items = contentDisp.split(";");
+            for (String s : items) {
+                if (s.trim().startsWith("filename")) {
+                    return s.substring(s.indexOf("=") + 2, s.length() - 1);
                 }
             }
         }
 
-        response.sendRedirect("dashboard.jsp");
+        return null;
     }
 }

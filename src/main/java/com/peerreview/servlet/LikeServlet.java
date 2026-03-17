@@ -1,10 +1,8 @@
 package com.peerreview.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
-import com.peerreview.dao.ProjectDAO;
-import com.peerreview.model.Project;
+import com.peerreview.dao.InteractionDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,12 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/viewProjects")
-public class ViewProjectsServlet extends HttpServlet {
-
+@WebServlet("/likeProject")
+public class LikeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
@@ -28,15 +25,17 @@ public class ViewProjectsServlet extends HttpServlet {
             return;
         }
 
-        String email = (String) session.getAttribute("userEmail");
+        String userEmail = (String) session.getAttribute("userEmail");
+        int projectId = Integer.parseInt(request.getParameter("projectId"));
 
-        ProjectDAO dao = new ProjectDAO();
+        InteractionDAO dao = new InteractionDAO();
 
-        // show projects uploaded by other users
-        List<Project> projects = dao.getOtherProjects(email);
+        if (dao.hasUserLiked(projectId, userEmail)) {
+            dao.removeLike(projectId, userEmail);
+        } else {
+            dao.addLike(projectId, userEmail);
+        }
 
-        request.setAttribute("projects", projects);
-
-        request.getRequestDispatcher("viewProjects.jsp").forward(request, response);
+        response.sendRedirect("viewProjects");
     }
 }

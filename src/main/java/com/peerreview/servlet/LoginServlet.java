@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
         } else {
 
             response.getWriter().println(
-                    "<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Email or Password! <a href='login.html'>Try Again</a></h3>");
+                    "<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Email or Password! <a href='login.jsp'>Try Again</a></h3>");
 
         }
     }

@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <h2 class="logo">PeerReview</h2>
+</nav>
+
+<div class="form-container">
+    <h2>Login</h2>
+
+   <form action="LoginServlet" method="post" autocomplete="off">
+
+    <label>Email</label>
+    <input type="email" name="email" autocomplete="off" required>
+
+    <label>Password</label>
+    <input type="password" name="password" autocomplete="new-password" required>
+
+    <button type="submit">Login</button>
+
+</form>
+    <p style="margin-top:15px; text-align:center;">
+        Don't have an account? <a href="register.html">Register</a>
+    </p>
+</div>
+
+</body>
+</html>
