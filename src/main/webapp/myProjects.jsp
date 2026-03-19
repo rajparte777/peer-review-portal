@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
 <title>My Projects</title>
 <link rel="stylesheet" href="css/viewProject.css">
 </head>
-<body>
+<body class="view-project-page">
 
 <h1 style="text-align:center">My Uploaded Projects</h1>
 

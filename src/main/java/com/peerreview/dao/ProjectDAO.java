@@ -232,19 +232,49 @@ public class ProjectDAO {
     public boolean deleteProject(int projectId, String email) {
         boolean status = false;
 
-        try {
-            Connection conn = DBConnection.getConnection();
+        String deleteMedia = "DELETE FROM project_media WHERE project_id = ?";
+        String deleteComments = "DELETE FROM comments WHERE project_id = ?";
+        String deleteLikes = "DELETE FROM likes WHERE project_id = ?";
+        String deleteReviews = "DELETE FROM reviews WHERE project_id = ?";
+        String deleteProject = "DELETE FROM projects WHERE id = ? AND student_email = ?";
 
-            String sql = "DELETE FROM projects WHERE id = ? AND student_email = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
 
-            ps.setInt(1, projectId);
-            ps.setString(2, email);
+            try (
+                PreparedStatement ps1 = conn.prepareStatement(deleteMedia);
+                PreparedStatement ps2 = conn.prepareStatement(deleteComments);
+                PreparedStatement ps3 = conn.prepareStatement(deleteLikes);
+                PreparedStatement ps4 = conn.prepareStatement(deleteReviews);
+                PreparedStatement ps5 = conn.prepareStatement(deleteProject)
+            ) {
+                ps1.setInt(1, projectId);
+                ps1.executeUpdate();
 
-            int row = ps.executeUpdate();
+                ps2.setInt(1, projectId);
+                ps2.executeUpdate();
 
-            if (row > 0) {
-                status = true;
+                ps3.setInt(1, projectId);
+                ps3.executeUpdate();
+
+                ps4.setInt(1, projectId);
+                ps4.executeUpdate();
+
+                ps5.setInt(1, projectId);
+                ps5.setString(2, email);
+
+                int row = ps5.executeUpdate();
+
+                if (row > 0) {
+                    conn.commit();
+                    status = true;
+                } else {
+                    conn.rollback();
+                }
+
+            } catch (Exception e) {
+                conn.rollback();
+                e.printStackTrace();
             }
 
         } catch (Exception e) {

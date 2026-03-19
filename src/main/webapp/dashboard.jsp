@@ -20,105 +20,84 @@ if(email == null){
 
 <body>
 
-<!-- Navbar -->
-
 <nav class="navbar">
-<h2>PeerReview</h2>
+    <h2>PeerReview</h2>
 
-<ul>
-<li><a href="submitProject.html">Submit Project</a></li>
-<li><a href="myProjects">My Projects</a></li>
-<li><a href="viewProjects">View Projects</a></li>
-<li><a href="LogoutServlet">Logout</a></li>
-</ul>
+    <ul>
+        <li><a href="submitProject.html">Submit Project</a></li>
+        <li><a href="myProjects">My Projects</a></li>
+        <li><a href="viewProjects">View Projects</a></li>
+        <li><a href="logout">Logout</a></li>
+    </ul>
 </nav>
 
-
-<!-- Welcome Section -->
-
 <section class="dashboard">
+    <h1>Welcome <%= session.getAttribute("userName") %></h1>
+    <p>Manage your projects and reviews</p>
 
-<h1>Welcome <%= session.getAttribute("userName") %></h1>
-<p>Manage your projects and reviews</p>
+    <div class="cards">
+        <div class="card">
+            <h3>Submit Project</h3>
+            <p>Upload your project for review</p>
+            <a href="submitProject.html">Submit</a>
+        </div>
 
-<div class="cards">
+        <div class="card">
+            <h3>My Projects</h3>
+            <p>See projects uploaded by you</p>
+            <a href="myProjects">View</a>
+        </div>
 
-<div class="card">
-<h3>Submit Project</h3>
-<p>Upload your project for review</p>
-<a href="submitProject.html">Submit</a>
-</div>
+        <div class="card">
+            <h3>View Projects</h3>
+            <p>See projects submitted by others</p>
+            <a href="viewProjects">View</a>
+        </div>
 
-<div class="card">
-<h3>My Projects</h3>
-<p>See projects uploaded by you</p>
-<a href="myProjects">View</a>
-</div>
-
-<div class="card">
-<h3>View Projects</h3>
-<p>See projects submitted by others</p>
-<a href="viewProjects">View</a>
-</div>
-
-<div class="card">
-<h3>Your Reviews</h3>
-<p>Check feedback on your projects</p>
-<a href="#">Check</a>
-</div>
-
-</div>
-
+        <div class="card">
+            <h3>Your Reviews</h3>
+            <p>Check feedback on your projects</p>
+            <a href="#">Check</a>
+        </div>
+    </div>
 </section>
-
-
-<!-- Statistics Section -->
 
 <section class="stats">
+    <div class="stat-box">
+        <h2>120+</h2>
+        <p>Projects Submitted</p>
+    </div>
 
-<div class="stat-box">
-<h2>120+</h2>
-<p>Projects Submitted</p>
-</div>
+    <div class="stat-box">
+        <h2>350+</h2>
+        <p>Reviews Given</p>
+    </div>
 
-<div class="stat-box">
-<h2>350+</h2>
-<p>Reviews Given</p>
-</div>
-
-<div class="stat-box">
-<h2>90+</h2>
-<p>Active Users</p>
-</div>
-
+    <div class="stat-box">
+        <h2>90+</h2>
+        <p>Active Users</p>
+    </div>
 </section>
 
-
-<!-- Recent Projects -->
-
 <section class="recent">
+    <h2>Recent Projects</h2>
 
-<h2>Recent Projects</h2>
+    <div class="recent-container">
+        <div class="recent-card">
+            <h3>Library Management System</h3>
+            <p>Java + MySQL</p>
+        </div>
 
-<div class="recent-container">
+        <div class="recent-card">
+            <h3>E-commerce Website</h3>
+            <p>HTML CSS JS</p>
+        </div>
 
-<div class="recent-card">
-<h3>Library Management System</h3>
-<p>Java + MySQL</p>
-</div>
-
-<div class="recent-card">
-<h3>E-commerce Website</h3>
-<p>HTML CSS JS</p>
-</div>
-
-<div class="recent-card">
-<h3>Online Voting System</h3>
-<p>Servlet + JSP</p>
-</div>
-
-</div>
-
+        <div class="recent-card">
+            <h3>Online Voting System</h3>
+            <p>Servlet + JSP</p>
+        </div>
+    </div>
 </section>
 
 </body>

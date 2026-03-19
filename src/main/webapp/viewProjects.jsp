@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
 pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List"%>
@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
 <title>View Projects</title>
 <link rel="stylesheet" href="css/viewProject.css">
 </head>
-<body>
+<body class="view-project-page">
 
 <h1 style="text-align:center">Submitted Projects</h1>
 
@@ -86,45 +86,55 @@ if(projects != null && !projects.isEmpty()){
     <p>Submitted by: <%= p.getStudentEmail() %></p>
 
     <div class="actions">
-        <form action="likeProject" method="post" style="display:inline;">
-            <input type="hidden" name="projectId" value="<%= p.getId() %>">
-            <button type="submit">
-                <%= likedByUser ? "💔 Unlike" : "👍 Like" %> (<%= likeCount %>)
-            </button>
-        </form>
+        <button 
+            type="button"
+            class="like-btn <%= likedByUser ? "liked" : "" %>"
+            data-project-id="<%= p.getId() %>"
+            onclick="toggleLike(this)">
+            <span class="like-text"><%= likedByUser ? "💔 Unlike" : "👍 Like" %></span>
+        </button>
+
+        <span class="like-count" id="like-count-<%= p.getId() %>"><%= likeCount %></span>
     </div>
 
+    <!-- COMMENTS SECTION -->
     <div class="project-section">
-        <h3>Comments (<%= commentCount %>)</h3>
+        <h3>Comments (<span id="comment-count-<%= p.getId() %>"><%= commentCount %></span>)</h3>
 
-        <form action="addComment" method="post">
+        <form onsubmit="submitComment(event, this)">
             <input type="hidden" name="projectId" value="<%= p.getId() %>">
             <textarea name="comment" placeholder="Write your comment..." required></textarea>
             <button type="submit">💬 Add Comment</button>
         </form>
 
-        <%
-        if(comments != null && !comments.isEmpty()){
-            for(Comment c : comments){
-        %>
-            <div class="comment-box">
-                <p><b><%= c.getUserEmail() %></b></p>
-                <p><%= c.getComment() %></p>
-            </div>
-        <%
+        <div class="comment-list" id="comment-list-<%= p.getId() %>">
+            <%
+            if(comments != null && !comments.isEmpty()){
+                for(Comment c : comments){
+            %>
+                <div class="comment-box">
+                    <p><b><%= c.getUserEmail() %></b></p>
+                    <p><%= c.getComment() %></p>
+                </div>
+            <%
+                }
+            } else {
+            %>
+                <p class="no-comment">No comments yet.</p>
+            <%
             }
-        } else {
-        %>
-            <p>No comments yet.</p>
-        <%
-        }
-        %>
+            %>
+        </div>
     </div>
 
+    <!-- REVIEWS SECTION -->
     <div class="project-section">
-        <h3>Reviews (<%= reviewCount %>) | Average Rating: <%= String.format("%.1f", avgRating) %> / 5</h3>
+        <h3>
+            Reviews (<span id="review-count-<%= p.getId() %>"><%= reviewCount %></span>) |
+            Average Rating: <span id="avg-rating-<%= p.getId() %>"><%= String.format("%.1f", avgRating) %></span> / 5
+        </h3>
 
-        <form action="addReview" method="post">
+        <form onsubmit="submitReview(event, this)">
             <input type="hidden" name="projectId" value="<%= p.getId() %>">
 
             <label>Rating:</label>
@@ -141,22 +151,24 @@ if(projects != null && !projects.isEmpty()){
             <button type="submit">⭐ Submit Review</button>
         </form>
 
-        <%
-        if(reviews != null && !reviews.isEmpty()){
-            for(Review r : reviews){
-        %>
-            <div class="review-box">
-                <p><b><%= r.getReviewerEmail() %></b> - <%= r.getRating() %>/5</p>
-                <p><%= r.getReviewText() %></p>
-            </div>
-        <%
+        <div class="review-list" id="review-list-<%= p.getId() %>">
+            <%
+            if(reviews != null && !reviews.isEmpty()){
+                for(Review r : reviews){
+            %>
+                <div class="review-box">
+                    <p><b><%= r.getReviewerEmail() %></b> - <%= r.getRating() %>/5</p>
+                    <p><%= r.getReviewText() %></p>
+                </div>
+            <%
+                }
+            } else {
+            %>
+                <p class="no-review">No reviews yet.</p>
+            <%
             }
-        } else {
-        %>
-            <p>No reviews yet.</p>
-        <%
-        }
-        %>
+            %>
+        </div>
     </div>
 
 </div>
@@ -176,5 +188,7 @@ if(projects != null && !projects.isEmpty()){
 </div>
 
 <script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
+<script src="<%=request.getContextPath()%>/js/likeProject.js"></script>
+<script src="<%=request.getContextPath()%>/js/projectInteraction.js"></script>
 </body>
 </html>

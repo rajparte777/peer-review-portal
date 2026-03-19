@@ -1,81 +1,83 @@
 @charset "UTF-8";
 
 /* =========================
-   PAGE
+   VIEW / MY PROJECT PAGE
 ========================= */
-body {
+.view-project-page,
+.view-project-page * {
+    box-sizing: border-box;
+}
+
+.view-project-page {
     margin: 0;
-    padding: 20px;
+    padding: 30px 16px 50px;
     font-family: Arial, sans-serif;
     background: #f5f7fb;
-    color: #222;
+    color: #111827;
 }
 
-h1 {
-    margin-bottom: 30px;
-    color: #1f2937;
+.view-project-page h1 {
+    margin: 0 0 34px;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 800;
+    color: #111827;
 }
-
 
 /* =========================
    PROJECT CARD
 ========================= */
-.project-card {
-    width: 90%;
-    max-width: 700px;
-    margin: 30px auto;
+.view-project-page .project-card {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto 34px;
     background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
+    padding: 26px;
+    border-radius: 20px;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    overflow: visible;
 }
 
-.project-card:hover {
-    transform: translateY(-2px);
-}
-
-.project-card h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
+.view-project-page .project-card h2 {
+    margin: 0 0 10px;
+    font-size: 30px;
     color: #111827;
-    font-size: 24px;
+    line-height: 1.3;
+    word-break: break-word;
 }
 
-.project-card p {
+.view-project-page .project-card p {
     margin: 10px 0;
-    line-height: 1.5;
-    color: #374151;
+    line-height: 1.7;
+    color: #475569;
+    font-size: 16px;
+    word-break: break-word;
 }
 
-.project-card a {
+.view-project-page .project-card a {
     color: #2563eb;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
+    word-break: break-word;
 }
 
-.project-card a:hover {
+.view-project-page .project-card a:hover {
     text-decoration: underline;
 }
 
-
 /* =========================
-   SLIDER CONTAINER
+   MEDIA SLIDER
 ========================= */
-.slider {
+.view-project-page .slider {
     position: relative;
-    margin-top: 18px;
-    border-radius: 14px;
-    overflow: hidden;
+    margin: 18px 0 16px;
+    border-radius: 16px;
     background: #f3f4f6;
+    overflow: hidden;
 }
 
-
-/* =========================
-   SLIDER TRACK
-========================= */
-.slider-track {
+.view-project-page .slider-track {
     display: flex;
     gap: 10px;
     overflow-x: auto;
@@ -83,20 +85,17 @@ h1 {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding: 10px;
 }
 
-.slider-track::-webkit-scrollbar {
+.view-project-page .slider-track::-webkit-scrollbar {
     display: none;
 }
 
-
-/* =========================
-   MEDIA ITEMS (IMAGE + VIDEO)
-========================= */
-.media-item {
+.view-project-page .media-item {
     min-width: 100%;
     max-width: 100%;
-    height: 360px;
+    height: 380px;
     flex-shrink: 0;
     object-fit: cover;
     scroll-snap-align: start;
@@ -105,270 +104,327 @@ h1 {
     display: block;
 }
 
-img.media-item {
+.view-project-page img.media-item {
     cursor: pointer;
 }
 
-video.media-item {
-    background: #000;
+.view-project-page video.media-item {
     outline: none;
 }
 
-
 /* =========================
-   ARROWS
+   SLIDER ARROWS
 ========================= */
-.arrow {
+.view-project-page .arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border: none;
     border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(15, 23, 42, 0.7);
     color: white;
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.arrow:hover {
-    background: rgba(0, 0, 0, 0.75);
+.view-project-page .arrow:hover {
+    background: rgba(15, 23, 42, 0.9);
 }
 
-.arrow:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-.left {
+.view-project-page .left {
     left: 12px;
 }
 
-.right {
+.view-project-page .right {
     right: 12px;
 }
 
-
 /* =========================
-   DOTS
+   ACTIONS
 ========================= */
-.dots {
-    text-align: center;
-    margin: 12px 0 4px;
-}
-
-.dot {
-    height: 10px;
-    width: 10px;
-    margin: 0 5px;
-    background-color: #d1d5db;
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.dot:hover {
-    transform: scale(1.15);
-}
-
-.dot.active {
-    background-color: #f59e0b;
-    transform: scale(1.2);
-}
-
-
-/* =========================
-   ACTION BUTTONS
-========================= */
-.actions {
-    margin-top: 18px;
+.view-project-page .actions {
+    margin-top: 16px;
+    margin-bottom: 12px;
     display: flex;
+    align-items: center;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 10px;
 }
 
-.actions button {
-    padding: 10px 16px;
+.view-project-page .like-btn,
+.view-project-page .action-btn,
+.view-project-page .project-section button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 18px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #2563eb;
     color: white;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    transition: 0.25s ease;
 }
 
-.actions button:hover {
+.view-project-page .like-btn:hover,
+.view-project-page .action-btn:hover,
+.view-project-page .project-section button:hover {
     background: #1d4ed8;
     transform: translateY(-1px);
 }
 
-.actions button:active {
-    transform: scale(0.98);
+.view-project-page .like-btn {
+    background: #e5e7eb;
+    color: #111827;
 }
 
+.view-project-page .like-btn:hover {
+    background: #d1d5db;
+}
+
+.view-project-page .like-btn.liked {
+    background: #2563eb;
+    color: white;
+}
+
+.view-project-page .like-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 14px;
+}
 
 /* =========================
-   POPUP IMAGE
+   PROJECT SECTION
 ========================= */
-.popup {
+.view-project-page .project-section {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.view-project-page .project-section h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.4;
+    color: #111827;
+}
+
+.view-project-page .project-section label {
+    display: inline-block;
+    margin: 12px 0 8px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.view-project-page .project-section form {
+    margin-top: 14px;
+}
+
+.view-project-page .project-section textarea,
+.view-project-page .project-section select {
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    font-size: 15px;
+    outline: none;
+}
+
+.view-project-page .project-section textarea:focus,
+.view-project-page .project-section select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.view-project-page .project-section textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* =========================
+   COMMENT / REVIEW LIST
+========================= */
+.view-project-page .comment-list,
+.view-project-page .review-list {
+    margin-top: 14px;
+}
+
+.view-project-page .comment-box,
+.view-project-page .review-box {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    border-left: 4px solid #2563eb;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.view-project-page .comment-box p,
+.view-project-page .review-box p {
+    margin: 6px 0;
+    line-height: 1.6;
+    color: #334155;
+}
+
+.view-project-page .comment-box b,
+.view-project-page .review-box b {
+    color: #0f172a;
+}
+
+.view-project-page .no-comment,
+.view-project-page .no-review {
+    color: #64748b;
+    margin-top: 12px;
+    font-style: italic;
+}
+
+/* =========================
+   COLLAPSIBLE LOOK
+========================= */
+.view-project-page .project-section {
+    transition: 0.3s ease;
+}
+
+.view-project-page .project-section.collapsed form,
+.view-project-page .project-section.collapsed .comment-list,
+.view-project-page .project-section.collapsed .review-list {
+    display: none;
+}
+
+.view-project-page .project-section h3 {
+    cursor: pointer;
+    position: relative;
+    padding-right: 34px;
+}
+
+.view-project-page .project-section h3::after {
+    content: "−";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 24px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.view-project-page .project-section.collapsed h3::after {
+    content: "+";
+}
+
+/* =========================
+   POPUP
+========================= */
+.view-project-page .popup {
     display: none;
     position: fixed;
-    z-index: 9999;
     inset: 0;
-    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
 
-.popup img {
+.view-project-page .popup img {
     max-width: 92%;
     max-height: 92%;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
 }
 
-.popup span {
+.view-project-page .popup span {
     position: absolute;
     top: 18px;
-    right: 28px;
+    right: 24px;
     font-size: 38px;
     color: white;
     cursor: pointer;
-    font-weight: bold;
-    user-select: none;
-}
-.action-btn {
-    display: inline-block;
-    background: #2563eb;
-    color: white;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
+    font-weight: 700;
 }
 
-.action-btn:hover {
-    background: #1d4ed8;
-}
-
-/* =========================
-   NO MEDIA MESSAGE
-========================= */
-.no-media {
-    padding: 30px;
-    text-align: center;
-    color: #6b7280;
-    font-weight: 500;
-}
-
-
-
-.project-section {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f8f8f8;
-    border-radius: 10px;
-}
-
-.project-section textarea {
-    width: 100%;
-    min-height: 80px;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    resize: vertical;
-}
-
-.project-section select {
-    padding: 8px;
-    margin: 10px 0;
-    border-radius: 8px;
-}
-
-.project-section button {
-    margin-top: 10px;
-    padding: 10px 16px;
-    border: none;
-    background: #2563eb;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.project-section button:hover {
-    background: #1d4ed8;
-}
-
-.comment-box,
-.review-box {
-    margin-top: 12px;
-    padding: 10px;
-    background: white;
-    border-left: 4px solid #2563eb;
-    border-radius: 8px;
-}
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 768px) {
-    body {
-        padding: 12px;
+    .view-project-page {
+        padding: 16px 12px 40px;
     }
 
-    .project-card {
-        width: 95%;
+    .view-project-page h1 {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+
+    .view-project-page .project-card {
         padding: 16px;
-        border-radius: 14px;
+        border-radius: 16px;
+        margin-bottom: 22px;
     }
 
-    .project-card h2 {
-        font-size: 20px;
+    .view-project-page .project-card h2 {
+        font-size: 24px;
     }
 
-    .media-item {
+    .view-project-page .media-item {
         height: 240px;
     }
 
-    .arrow {
+    .view-project-page .arrow {
         width: 36px;
         height: 36px;
         font-size: 18px;
     }
 
-    .left {
-        left: 8px;
+    .view-project-page .project-section {
+        padding: 14px;
     }
 
-    .right {
-        right: 8px;
+    .view-project-page .project-section h3 {
+        font-size: 18px;
     }
 
-    .actions button {
+    .view-project-page .actions {
+        align-items: stretch;
+    }
+
+    .view-project-page .like-btn,
+    .view-project-page .action-btn,
+    .view-project-page .project-section button {
         width: 100%;
-        text-align: center;
     }
 
-    .popup span {
+    .view-project-page .popup span {
         top: 12px;
-        right: 18px;
-        font-size: 32px;
+        right: 16px;
+        font-size: 30px;
     }
 }

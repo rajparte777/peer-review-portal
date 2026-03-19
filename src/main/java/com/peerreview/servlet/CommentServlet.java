@@ -1,6 +1,7 @@
 package com.peerreview.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.peerreview.dao.InteractionDAO;
 
@@ -15,26 +16,59 @@ import jakarta.servlet.http.HttpSession;
 public class CommentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("userEmail") == null) {
-            response.sendRedirect("login.jsp");
+            out.print("{\"status\":\"error\",\"message\":\"User not logged in\"}");
             return;
         }
 
         String userEmail = (String) session.getAttribute("userEmail");
-        int projectId = Integer.parseInt(request.getParameter("projectId"));
+        String projectIdParam = request.getParameter("projectId");
         String comment = request.getParameter("comment");
 
-        InteractionDAO dao = new InteractionDAO();
-
-        if (comment != null && !comment.trim().isEmpty()) {
-            dao.addComment(projectId, userEmail, comment);
+        if (projectIdParam == null || projectIdParam.trim().isEmpty()) {
+            out.print("{\"status\":\"error\",\"message\":\"Invalid project id\"}");
+            return;
         }
 
-        response.sendRedirect("viewProjects");
+        if (comment == null || comment.trim().isEmpty()) {
+            out.print("{\"status\":\"error\",\"message\":\"Comment cannot be empty\"}");
+            return;
+        }
+
+        try {
+            int projectId = Integer.parseInt(projectIdParam);
+
+            InteractionDAO dao = new InteractionDAO();
+            boolean status = dao.addComment(projectId, userEmail, comment);
+
+            if (status) {
+                int commentCount = dao.getCommentCount(projectId);
+
+                String safeComment = comment.replace("\\", "\\\\")
+                                            .replace("\"", "\\\"")
+                                            .replace("\n", "\\n")
+                                            .replace("\r", "");
+
+                String safeUserEmail = userEmail.replace("\\", "\\\\")
+                                                .replace("\"", "\\\"");
+
+                out.print("{\"status\":\"success\",\"userEmail\":\"" + safeUserEmail + "\",\"comment\":\"" + safeComment + "\",\"commentCount\":" + commentCount + "}");
+            } else {
+                out.print("{\"status\":\"error\",\"message\":\"Unable to add comment\"}");
+            }
+
+        } catch (NumberFormatException e) {
+            out.print("{\"status\":\"error\",\"message\":\"Project id must be a number\"}");
+        }
     }
 }
