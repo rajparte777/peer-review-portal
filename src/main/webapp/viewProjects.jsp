@@ -134,22 +134,24 @@ if(projects != null && !projects.isEmpty()){
             Average Rating: <span id="avg-rating-<%= p.getId() %>"><%= String.format("%.1f", avgRating) %></span> / 5
         </h3>
 
-        <form onsubmit="submitReview(event, this)">
-            <input type="hidden" name="projectId" value="<%= p.getId() %>">
+       <form onsubmit="submitReview(event, this)">
+    <input type="hidden" name="projectId" value="<%= p.getId() %>">
 
-            <label>Rating:</label>
-            <select name="rating" required>
-                <option value="">Select</option>
-                <option value="1">1 Star</option>
-                <option value="2">2 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="5">5 Stars</option>
-            </select>
+    <label>Rating:</label>
 
-            <textarea name="reviewText" placeholder="Write your review..." required></textarea>
-            <button type="submit">⭐ Submit Review</button>
-        </form>
+    <div class="star-rating">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+    </div>
+
+    <input type="hidden" name="rating" class="rating-value" required>
+
+    <textarea name="reviewText" placeholder="Write your review..." required></textarea>
+    <button type="submit">⭐ Submit Review</button>
+</form>
 
         <div class="review-list" id="review-list-<%= p.getId() %>">
             <%
@@ -157,7 +159,19 @@ if(projects != null && !projects.isEmpty()){
                 for(Review r : reviews){
             %>
                 <div class="review-box">
-                    <p><b><%= r.getReviewerEmail() %></b> - <%= r.getRating() %>/5</p>
+                    <p>
+    <b><%= r.getReviewerEmail() %></b> -
+    <%
+    int rating = r.getRating();
+    for(int i = 1; i <= 5; i++){
+        if(i <= rating){
+    %>★<%
+        } else {
+    %>☆<%
+        }
+    }
+    %>
+</p>
                     <p><%= r.getReviewText() %></p>
                 </div>
             <%

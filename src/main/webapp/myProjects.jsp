@@ -17,6 +17,18 @@ pageEncoding="UTF-8"%>
 <h1 style="text-align:center">My Uploaded Projects</h1>
 
 <%
+String msg = request.getParameter("msg");
+if ("updated".equals(msg)) {
+%>
+    <div class="success-msg">
+        ✅ Project Updated Successfully!
+    </div>
+<%
+}
+%>
+
+
+<%
 List<Project> projects = (List<Project>) request.getAttribute("projects");
 
 if(projects != null && !projects.isEmpty()){
@@ -61,9 +73,9 @@ if(projects != null && !projects.isEmpty()){
         <button class="arrow right" onclick="slide(this,1)">❯</button>
     </div>
 
-    <p>
-        <a href="<%= p.getGithubLink() %>" target="_blank">View GitHub Project</a>
-    </p>
+    <p class="github">
+    <a href="<%= p.getGithubLink() %>" target="_blank" style="color: #1f1594;">View GitHub Project</a>
+</p>
 
     <p><b>Submitted by:</b> <%= p.getStudentEmail() %></p>
 
@@ -98,5 +110,13 @@ if(projects != null && !projects.isEmpty()){
 </div>
 
 <script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
+<script>
+setTimeout(function () {
+    var msg = document.querySelector(".success-msg");
+    if (msg) {
+        msg.style.display = "none";
+    }
+}, 3000);
+</script>
 </body>
 </html>

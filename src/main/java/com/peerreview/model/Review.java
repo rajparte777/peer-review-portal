@@ -7,6 +7,17 @@ public class Review {
     private int rating;
     private String reviewText;
     private String createdAt;
+    
+
+    private String projectTitle;
+
+    public String getProjectTitle() {
+        return projectTitle;
+    }
+
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
+    }
 
     public int getId() {
         return id;

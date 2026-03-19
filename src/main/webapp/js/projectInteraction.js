@@ -103,4 +103,25 @@ document.addEventListener("DOMContentLoaded", function () {
             section.classList.toggle("collapsed");
         });
     });
+
+    const ratingBoxes = document.querySelectorAll(".star-rating");
+
+    ratingBoxes.forEach(ratingBox => {
+        const stars = ratingBox.querySelectorAll("span");
+        const form = ratingBox.closest("form");
+        const input = form.querySelector(".rating-value");
+
+        stars.forEach((star, index) => {
+            star.addEventListener("click", function () {
+                const value = star.getAttribute("data-value");
+                input.value = value;
+
+                stars.forEach(s => s.classList.remove("active"));
+
+                for (let i = 0; i <= index; i++) {
+                    stars[i].classList.add("active");
+                }
+            });
+        });
+    });
 });

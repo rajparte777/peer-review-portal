@@ -16,23 +16,28 @@ import jakarta.servlet.http.HttpSession;
 public class EditProjectServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private ProjectDAO dao = new ProjectDAO();
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
-        if (session == null || session.getAttribute("userEmail") == null) {
-            response.sendRedirect("login.jsp");
+        String idParam = request.getParameter("id");
+
+        if (idParam == null || idParam.trim().isEmpty()) {
+            response.sendRedirect("myProjects");
             return;
         }
 
-        int projectId = Integer.parseInt(request.getParameter("id"));
-
-        ProjectDAO dao = new ProjectDAO();
-        Project project = dao.getProjectById(projectId);
+        int id = Integer.parseInt(idParam);
+        Project project = dao.getProjectById(id);
 
         if (project == null) {
-            response.sendRedirect("myProjects");
+        	response.sendRedirect("myProjects?msg=updated");
             return;
         }
 
@@ -40,6 +45,7 @@ public class EditProjectServlet extends HttpServlet {
         request.getRequestDispatcher("editProject.jsp").forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -50,23 +56,26 @@ public class EditProjectServlet extends HttpServlet {
             return;
         }
 
-        String email = (String) session.getAttribute("userEmail");
+        String userEmail = (String) session.getAttribute("userEmail");
 
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String github = request.getParameter("github");
+        String githubLink = request.getParameter("githubLink");
 
         Project p = new Project();
         p.setId(id);
         p.setTitle(title);
         p.setDescription(description);
-        p.setGithubLink(github);
-        p.setStudentEmail(email);
+        p.setGithubLink(githubLink);
+        p.setStudentEmail(userEmail);
 
-        ProjectDAO dao = new ProjectDAO();
-        dao.updateProject(p);
+        boolean status = dao.updateProject(p);
 
-        response.sendRedirect("myProjects");
+        if (status) {
+            response.sendRedirect("myProjects?msg=updated");
+        } else {
+            response.getWriter().println("Project update failed");
+        }
     }
 }

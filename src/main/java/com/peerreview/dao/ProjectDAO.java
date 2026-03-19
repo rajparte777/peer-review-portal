@@ -284,6 +284,27 @@ public class ProjectDAO {
         return status;
     }
 
+    
+    //real database value
+    public int getTotalProjects() {
+        int count = 0;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = "SELECT COUNT(*) FROM projects";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
     // GET MEDIA BY PROJECT ID
     public List<String[]> getMediaByProjectId(int projectId) {
         List<String[]> mediaList = new ArrayList<>();

@@ -9,6 +9,19 @@ if(email == null){
     return;
 }
 %>
+<%@ page import="com.peerreview.dao.ProjectDAO" %>
+<%@ page import="com.peerreview.dao.ReviewDAO" %>
+<%@ page import="com.peerreview.dao.UserDAO" %>
+
+<%
+ProjectDAO projectDAO = new ProjectDAO();
+ReviewDAO reviewDAO = new ReviewDAO();
+UserDAO userDAO = new UserDAO();
+
+int totalProjects = projectDAO.getTotalProjects();
+int totalReviews = reviewDAO.getTotalReviews();   // ✅ THIS LINE WAS MISSING
+int totalUsers = userDAO.getTotalUsers();
+%>
 
 <!DOCTYPE html>
 <html>
@@ -57,26 +70,26 @@ if(email == null){
         <div class="card">
             <h3>Your Reviews</h3>
             <p>Check feedback on your projects</p>
-            <a href="#">Check</a>
+            <a href="myReviews">Check</a>
         </div>
     </div>
 </section>
 
 <section class="stats">
-    <div class="stat-box">
-        <h2>120+</h2>
-        <p>Projects Submitted</p>
-    </div>
+ <div class="stat-box">
+    <h2><%= totalProjects %>+</h2>
+    <p>Projects Submitted</p>
+</div>
 
-    <div class="stat-box">
-        <h2>350+</h2>
-        <p>Reviews Given</p>
-    </div>
+<div class="stat-box">
+    <h2><%= totalReviews %>+</h2>
+    <p>Reviews Given</p>
+</div>
 
-    <div class="stat-box">
-        <h2>90+</h2>
-        <p>Active Users</p>
-    </div>
+<div class="stat-box">
+    <h2><%= totalUsers %>+</h2>
+    <p>Active Users</p>
+</div>
 </section>
 
 <section class="recent">

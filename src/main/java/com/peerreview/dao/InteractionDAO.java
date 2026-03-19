@@ -28,7 +28,7 @@ public class InteractionDAO {
 
             try (ResultSet rs = checkPs.executeQuery()) {
                 if (rs.next()) {
-                    return false; // already liked
+                    return false;
                 }
             }
 
@@ -128,6 +128,8 @@ public class InteractionDAO {
             return false;
         }
 
+        comment = comment.trim();
+
         String sql = "INSERT INTO comments(project_id, user_email, comment) VALUES(?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -209,6 +211,12 @@ public class InteractionDAO {
         if (rating < 1 || rating > 5) {
             return false;
         }
+
+        if (reviewText == null || reviewText.trim().isEmpty()) {
+            return false;
+        }
+
+        reviewText = reviewText.trim();
 
         String checkSql = "SELECT id FROM reviews WHERE project_id = ? AND reviewer_email = ?";
         String updateSql = "UPDATE reviews SET rating = ?, review_text = ? WHERE project_id = ? AND reviewer_email = ?";
