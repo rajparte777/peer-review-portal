@@ -1,79 +1,89 @@
 @charset "UTF-8";
-body {
+
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: #111827;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 90px;   /* ✅ keep ONLY this */
+}
 .navbar {
-    background: #1e3a8a;
+    background: #0f172a;
     color: white;
-    padding: 15px 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 16px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 .logo {
     margin: 0;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 .form-container {
-    width: 380px;
-    margin: 60px auto;
+    width: 100%;
+    max-width: 460px;
+    margin: 40px auto 0;
     background: white;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    padding: 34px 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
 }
 
 .form-container h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #1e293b;
+    margin-bottom: 24px;
+    font-size: 30px;
+    color: #0f172a;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }
 
 form label {
-    display: block;
-    margin: 12px 0 6px;
     font-weight: 600;
     color: #334155;
+    margin-bottom: 8px;
+    margin-top: 10px;
 }
 
 form input {
     width: 100%;
-    padding: 12px;
+    padding: 13px 14px;
+    margin-bottom: 16px;
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border-radius: 10px;
+    font-size: 15px;
     outline: none;
-    box-sizing: border-box;
-}
-
-form input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
 }
 
 form button {
     width: 100%;
-    margin-top: 20px;
-    padding: 12px;
-    border: none;
+    padding: 14px;
     background: #2563eb;
     color: white;
+    border: none;
+    border-radius: 10px;
     font-size: 16px;
-    border-radius: 8px;
+    font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-form button:hover {
-    background: #1d4ed8;
 }
 
 a {
     color: #2563eb;
     text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+    font-weight: 600;
 }

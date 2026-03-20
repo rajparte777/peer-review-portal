@@ -11,6 +11,11 @@ body {
     background: linear-gradient(135deg, #eef2ff, #f8fafc);
     color: #111827;
     min-height: 100vh;
+     padding-top: 80px;
+      
+    margin: 0;
+  
+
 }
 
 /* =========================
@@ -23,8 +28,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
+
 
 .navbar h2,
 .logo {
@@ -48,6 +57,8 @@ body {
 
 .navbar ul li a:hover {
     color: #93c5fd;
+  
+
 }
 
 /* =========================
@@ -55,6 +66,9 @@ body {
 ========================= */
 .hero {
     text-align: center;
+  
+    margin-top: 0;
+
     padding: 110px 20px 90px;
     /*background: linear-gradient(135deg, #2563eb, #1e40af);
     background: linear-gradient(to right, #6a11cb, #2575fc);
@@ -96,6 +110,8 @@ color: white;
 .btn:hover {
     transform: translateY(-2px);
     background: #eff6ff;
+    
+    text-decoration: none;
 }
 
 .btn-secondary {
@@ -106,6 +122,8 @@ color: white;
 .btn-secondary:hover {
     transform: translateY(-2px);
     background: #fbbf24;
+    
+    text-decoration: none;
 }
 
 /* =========================
@@ -116,9 +134,11 @@ color: white;
     justify-content: center;
     gap: 28px;
     flex-wrap: wrap;
-    padding: 70px 20px;
-    max-width: 1200px;
+    padding: 82px 20px;
+    max-width: 1540px;
     margin: 0 auto;
+        background-color: #dcd4c4;
+        
 }
 
 .feature-card {
@@ -127,7 +147,7 @@ color: white;
     width: 280px;
     text-align: center;
     border-radius: 16px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 22px rgba(0, 0, 255, 0.08);
     border: 1px solid #e5e7eb;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -198,9 +218,11 @@ select {
 
 input:focus,
 textarea:focus,
-select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+select:focus,
+a:focus,
+button:focus {
+    outline: none;   /* remove blue border */
+    box-shadow: none;
 }
 
 textarea {
@@ -258,7 +280,7 @@ footer {
     padding: 22px;
     background: #0f172a;
     color: white;
-    margin-top: 40px;
+    
     font-size: 15px;
 }
 

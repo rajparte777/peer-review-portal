@@ -80,25 +80,40 @@ if(projects != null && !projects.isEmpty()){
     </div>
 
     <p>
-        <a href="<%= p.getGithubLink() %>" target="_blank">View GitHub Project</a>
+        <a href="<%= p.getGithubLink() %>" target="_blank" style="color: #4c3cc3d6">View GitHub Project</a>
     </p>
 
     <p>Submitted by: <%= p.getStudentEmail() %></p>
 
-    <div class="actions">
-        <button 
-            type="button"
-            class="like-btn <%= likedByUser ? "liked" : "" %>"
-            data-project-id="<%= p.getId() %>"
-            onclick="toggleLike(this)">
-            <span class="like-text"><%= likedByUser ? "💔 Unlike" : "👍 Like" %></span>
-        </button>
+    <div class="actions feedback-actions">
 
-        <span class="like-count" id="like-count-<%= p.getId() %>"><%= likeCount %></span>
-    </div>
+    <!-- LIKE -->
+    <button 
+        type="button"
+        class="like-btn <%= likedByUser ? "liked" : "" %>"
+        data-project-id="<%= p.getId() %>"
+        onclick="toggleLike(this)">
+        <span class="like-text"><%= likedByUser ? "💔 Unlike" : "👍 Like" %></span>
+    </button>
+
+    <span class="like-count" id="like-count-<%= p.getId() %>"><%= likeCount %></span>
+
+    <!-- COMMENT BUTTON -->
+    <button type="button" class="feedback-btn"
+        onclick="openProjectSection('comments-<%= p.getId() %>')">
+        💬 Comments (<%= commentCount %>)
+    </button>
+
+    <!-- REVIEW BUTTON -->
+    <button type="button" class="feedback-btn"
+        onclick="openProjectSection('reviews-<%= p.getId() %>')">
+        ⭐ Reviews (<%= reviewCount %>)
+    </button>
+
+</div>
 
     <!-- COMMENTS SECTION -->
-    <div class="project-section">
+    <div class="project-section collapsed" id="comments-<%= p.getId() %>">
         <h3>Comments (<span id="comment-count-<%= p.getId() %>"><%= commentCount %></span>)</h3>
 
         <form onsubmit="submitComment(event, this)">
@@ -128,7 +143,7 @@ if(projects != null && !projects.isEmpty()){
     </div>
 
     <!-- REVIEWS SECTION -->
-    <div class="project-section">
+  <div class="project-section collapsed" id="reviews-<%= p.getId() %>">
         <h3>
             Reviews (<span id="review-count-<%= p.getId() %>"><%= reviewCount %></span>) |
             Average Rating: <span id="avg-rating-<%= p.getId() %>"><%= String.format("%.1f", avgRating) %></span> / 5
@@ -204,5 +219,6 @@ if(projects != null && !projects.isEmpty()){
 <script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
 <script src="<%=request.getContextPath()%>/js/likeProject.js"></script>
 <script src="<%=request.getContextPath()%>/js/projectInteraction.js"></script>
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
 </body>
 </html>
