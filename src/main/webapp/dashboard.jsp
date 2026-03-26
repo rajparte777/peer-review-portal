@@ -37,6 +37,7 @@ int totalUsers = userDAO.getTotalUsers();
     <h2>PeerReview</h2>
 
     <ul>
+        <li><a href="index.html">Home</a></li>
         <li><a href="submitProject.html">Submit Project</a></li>
         <li><a href="myProjects">My Projects</a></li>
         <li><a href="viewProjects">View Projects</a></li>
