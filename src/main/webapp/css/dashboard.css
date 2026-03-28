@@ -38,8 +38,10 @@ body {
 .navbar ul li a {
     color: white;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.5;
+    
 }
 
 .navbar ul li a:hover {

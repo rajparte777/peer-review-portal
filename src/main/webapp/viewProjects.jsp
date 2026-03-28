@@ -13,11 +13,23 @@ pageEncoding="UTF-8"%>
 <head>
 <meta charset="UTF-8">
 <title>View Projects</title>
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/viewProject.css">
 </head>
 <body class="view-project-page">
+<nav class="navbar">
+    <h2 class="logo">PeerReview</h2>
 
-<h1 style="text-align:center">Submitted Projects</h1>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+     
+     <li><a href="dashboard.jsp">Dash Board</a></li>
+        <li><a href="myProjects">My Projects</a></li>
+        
+        <li><a href="logout">Logout</a></li>
+    </ul>
+</nav>
+<h1 class=submit-header  >Submitted Projects</h1>
 
 <%
 List<Project> projects = (List<Project>) request.getAttribute("projects");

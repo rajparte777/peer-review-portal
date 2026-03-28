@@ -13,10 +13,22 @@ pageEncoding="UTF-8"%>
 <head>
 <meta charset="UTF-8">
 <title>My Projects</title>
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/viewProject.css">
 </head>
 <body class="view-project-page">
+<nav class="navbar">
+    <h2 class="logo">PeerReview</h2>
 
+    <ul>
+        <li><a href="index.html">Home</a></li>
+     
+     <li><a href="dashboard.jsp">Dash Board</a></li>
+          <li><a href="viewProjects">View Projects</a></li>
+        
+        <li><a href="logout">Logout</a></li>
+    </ul>
+</nav>
 <h1 style="text-align:center">My Uploaded Projects</h1>
 
 <%
