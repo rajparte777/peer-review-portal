@@ -14,8 +14,8 @@ public class EmailUtility {
 
     public static void sendEmail(String toEmail, String subject, String messageText) {
 
-        final String fromEmail = "parteraj2005@gmail.com";
-        final String appPassword = "zthmocnrfcukziyn";
+        final String fromEmail = "peerreviewportal2026@gmail.com";
+        final String appPassword = "gaglavicymylnggo";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");

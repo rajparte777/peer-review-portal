@@ -5,6 +5,7 @@
 <title>Register</title>
 <link rel="stylesheet" href="css/register.css">
 </head>
+
 <body class="view-project-page">
 
 <nav class="navbar">
@@ -14,15 +15,33 @@
 <div class="form-container">
     <h2>Create Account</h2>
 
-    <form action="RegisterServlet" method="post">
+    <form action="RegisterServlet" method="post" onsubmit="return validateForm()">
+
         <label>Name</label>
-        <input type="text" name="name" required autocomplete="name">
+        <input type="text" name="name" id="name" required autocomplete="name">
 
         <label>Email</label>
-        <input type="email" name="email" required autocomplete="email">
+        <input type="text" name="email" id="email" required autocomplete="email">
 
         <label>Password</label>
-        <input type="password" name="password" required autocomplete="new-password">
+        <div class="password-wrapper">
+    <input type="password" name="password" id="password" required autocomplete="new-password">
+
+    <span class="eye-icon" onclick="togglePassword()">
+        <!-- Eye Open -->
+        <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#64748b" viewBox="0 0 24 24">
+            <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+            <circle cx="12" cy="12" r="2.5"/>
+        </svg>
+
+        <!-- Eye Closed -->
+        <svg id="eye-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#64748b" viewBox="0 0 24 24" style="display:none;">
+            <path d="M2 5l20 14M10.58 10.58a2 2 0 0 0 2.83 2.83M9.88 4.24A11.94 11.94 0 0 1 12 4c7 0 11 8 11 8a21.73 21.73 0 0 1-5.17 5.94M6.53 6.53A21.94 21.94 0 0 0 1 12s4 8 11 8a11.9 11.9 0 0 0 4.23-.77"/>
+        </svg>
+    </span>
+</div>
+
+        <p id="errorMsg" style="color:red; margin-top:6px;margin-bottom: 6px"></p>
 
         <button type="submit">Register</button>
     </form>
@@ -31,6 +50,8 @@
         Already have an account? <a href="login.jsp">Login</a>
     </p>
 </div>
+
+<script src="js/validation.js"></script>
 
 </body>
 </html>

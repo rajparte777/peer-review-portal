@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         if (status) {
 
             // Send email to admin
-            String adminEmail = "peerreviewportal2026@gmail.com";
+            String adminEmail = "parteraj2005@gmail.com";
             String subject = "New User Registered - Peer Review Portal";
             String message = "A new user has registered on Peer Review Portal.\n\n"
                     + "Name: " + name + "\n"

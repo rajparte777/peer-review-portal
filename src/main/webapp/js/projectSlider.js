@@ -1,6 +1,4 @@
-/* =========================
-   SLIDER FUNCTION
-========================= */
+
 function slide(button, direction) {
     const slider = button.closest(".slider");
     const track = slider.querySelector(".slider-track");
@@ -21,9 +19,8 @@ function slide(button, direction) {
 }
 
 
-/* =========================
-   UPDATE DOT INDICATOR
-========================= */
+
+
 function updateDots(slider) {
     const track = slider.querySelector(".slider-track");
     const items = slider.querySelectorAll(".media-item");
@@ -42,9 +39,9 @@ function updateDots(slider) {
 }
 
 
-/* =========================
-   CLICK DOT → MOVE SLIDE
-========================= */
+
+
+
 function goToSlide(slider, index) {
     const track = slider.querySelector(".slider-track");
     const items = slider.querySelectorAll(".media-item");
@@ -64,9 +61,9 @@ function goToSlide(slider, index) {
 }
 
 
-/* =========================
-   IMAGE POPUP
-========================= */
+
+
+
 function openPopup(src) {
     const popup = document.getElementById("popup");
     const popupImg = document.getElementById("popupImg");
@@ -78,9 +75,9 @@ function openPopup(src) {
 }
 
 
-/* =========================
-   CLOSE POPUP
-========================= */
+
+
+
 function closePopup() {
     const popup = document.getElementById("popup");
     const popupImg = document.getElementById("popupImg");
@@ -92,9 +89,9 @@ function closePopup() {
 }
 
 
-/* =========================
-   INITIALIZE SLIDERS
-========================= */
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const sliders = document.querySelectorAll(".slider");
 
@@ -140,9 +137,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    /* =========================
-       CLOSE POPUP ON OUTSIDE CLICK
-    ========================= */
+    
+	
+	
+	
+	
     const popup = document.getElementById("popup");
 
     if (popup) {
