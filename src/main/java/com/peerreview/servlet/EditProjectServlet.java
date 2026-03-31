@@ -37,7 +37,7 @@ public class EditProjectServlet extends HttpServlet {
         Project project = dao.getProjectById(id);
 
         if (project == null) {
-        	response.sendRedirect("myProjects?msg=updated");
+            response.sendRedirect("myProjects?msg=updated");
             return;
         }
 
@@ -62,12 +62,28 @@ public class EditProjectServlet extends HttpServlet {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String githubLink = request.getParameter("githubLink");
+        String githubProfile = request.getParameter("githubProfile");
+
+        if (githubLink != null) {
+            githubLink = githubLink.trim();
+            if (githubLink.isEmpty()) {
+                githubLink = null;
+            }
+        }
+
+        if (githubProfile != null) {
+            githubProfile = githubProfile.trim();
+            if (githubProfile.isEmpty()) {
+                githubProfile = null;
+            }
+        }
 
         Project p = new Project();
         p.setId(id);
         p.setTitle(title);
         p.setDescription(description);
         p.setGithubLink(githubLink);
+        p.setGithubProfile(githubProfile);
         p.setStudentEmail(userEmail);
 
         boolean status = dao.updateProject(p);
