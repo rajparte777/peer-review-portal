@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +7,7 @@
 <title>Login</title>
 <link rel="stylesheet" href="css/register.css">
 </head>
-<body >
+<body>
 
 <nav class="navbar">
     <h2 class="logo">PeerReview</h2>
@@ -16,21 +16,49 @@
 <div class="form-container">
     <h2>Login</h2>
 
-   <form action="LoginServlet" method="post" autocomplete="off">
+    <form action="LoginServlet" method="post" autocomplete="off">
 
-    <label>Email</label>
-    <input type="email" name="email" autocomplete="off" required>
+        <label>Email</label>
+        <input type="email" name="email" autocomplete="off" required>
 
-    <label>Password</label>
-    <input type="password" name="password" autocomplete="new-password" required>
+        <label>Password</label>
+        <div class="password-wrapper">
+            <input type="password" name="password" id="password" required autocomplete="new-password">
 
-    <button type="submit">Login</button>
+            <span class="eye-icon" onclick="togglePassword()">
+                <!-- Eye Open -->
+                <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#64748b" viewBox="0 0 24 24">
+                    <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+                    <circle cx="12" cy="12" r="2.5"/>
+                </svg>
 
-</form>
+                <!-- Eye Closed -->
+                <svg id="eye-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#64748b" viewBox="0 0 24 24" style="display:none;">
+                    <path d="M2 5l20 14M10.58 10.58a2 2 0 0 0 2.83 2.83M9.88 4.24A11.94 11.94 0 0 1 12 4c7 0 11 8 11 8a21.73 21.73 0 0 1-5.17 5.94M6.53 6.53A21.94 21.94 0 0 0 1 12s4 8 11 8a11.9 11.9 0 0 0 4.23-.77"/>
+                </svg>
+            </span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
     <p style="margin-top:15px; text-align:center;">
         Don't have an account? <a href="register.html">Register</a>
     </p>
 </div>
+
+<script src="js/validation.js"></script>
+
+<%
+String error = request.getParameter("error");
+if ("invalid".equals(error)) {
+%>
+<script>
+    alert("Invalid email or password!");
+</script>
+<%
+}
+%>
 
 </body>
 </html>

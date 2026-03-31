@@ -91,9 +91,22 @@ if(projects != null && !projects.isEmpty()){
         <button class="arrow right" onclick="slide(this,1)">❯</button>
     </div>
 
+<% if (p.getGithubLink() != null && !p.getGithubLink().trim().isEmpty()) { %>
     <p>
-        <a href="<%= p.getGithubLink() %>" target="_blank" style="color: #4c3cc3d6">View GitHub Project</a>
+        <a href="<%= p.getGithubLink() %>" target="_blank" style="color: #4c3cc3d6">
+            🔗 View GitHub Project
+        </a>
     </p>
+<% } %>
+
+<% if (p.getGithubProfile() != null && !p.getGithubProfile().trim().isEmpty()) { %>
+    <p>
+        <a href="<%= p.getGithubProfile() %>" target="_blank" style="color: #28a745">
+            👤 View GitHub Profile
+        </a>
+    </p>
+<% } %>
+
 
     <p>Submitted by: <%= p.getStudentEmail() %></p>
 

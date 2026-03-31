@@ -41,12 +41,22 @@ public class SubmitProjectServlet extends HttpServlet {
 
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String github = request.getParameter("github");
+        String github = request.getParameter("githubLink");
+        String githubProfile = request.getParameter("githubProfile");
+
+        if (github != null && github.trim().isEmpty()) {
+            github = null;
+        }
+
+        if (githubProfile != null && githubProfile.trim().isEmpty()) {
+            githubProfile = null;
+        }
 
         Project project = new Project();
         project.setTitle(title);
         project.setDescription(description);
         project.setGithubLink(github);
+        project.setGithubProfile(githubProfile);
         project.setStudentEmail(email);
 
         ProjectDAO dao = new ProjectDAO();

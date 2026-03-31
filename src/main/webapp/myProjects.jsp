@@ -15,21 +15,23 @@ pageEncoding="UTF-8"%>
 <title>My Projects</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/viewProject.css">
+<link rel="stylesheet" href="css/myProject.css">
+
+
 </head>
 <body class="view-project-page">
+
 <nav class="navbar">
     <h2 class="logo">PeerReview</h2>
-
     <ul>
         <li><a href="index.html">Home</a></li>
-     
-     <li><a href="dashboard.jsp">Dash Board</a></li>
-          <li><a href="viewProjects">View Projects</a></li>
-        
+        <li><a href="dashboard.jsp">Dash Board</a></li>
+        <li><a href="viewProjects">View Projects</a></li>
         <li><a href="logout">Logout</a></li>
     </ul>
 </nav>
-<h1 style="text-align:center">My Uploaded Projects</h1>
+
+<h1 class="my-projects-title">My Uploaded Projects</h1>
 
 <%
 String msg = request.getParameter("msg");
@@ -59,7 +61,32 @@ if(projects != null && !projects.isEmpty()){
 <div class="project-card">
 
     <h2><%= p.getTitle() %></h2>
-    <p><%= p.getDescription() %></p>
+    <%
+String fullDesc = p.getDescription();
+String shortDesc = fullDesc;
+
+if (fullDesc != null && fullDesc.length() > 180) {
+    shortDesc = fullDesc.substring(0, 180) + "...";
+}
+%>
+
+<p class="project-desc">
+    <span id="short-desc-<%= p.getId() %>" <%= (fullDesc != null && fullDesc.length() > 180) ? "" : "style='display:inline;'" %>>
+        <%= shortDesc %>
+    </span>
+
+    <% if (fullDesc != null && fullDesc.length() > 180) { %>
+        <span id="full-desc-<%= p.getId() %>" style="display:none;">
+            <%= fullDesc %>
+        </span>
+
+        <a href="javascript:void(0);" class="read-more-btn"
+           onclick="toggleDescription(<%= p.getId() %>)"
+           id="toggle-btn-<%= p.getId() %>">
+            Read More
+        </a>
+    <% } %>
+</p>
 
     <div class="slider">
         <button class="arrow left" onclick="slide(this,-1)">❮</button>
@@ -94,16 +121,28 @@ if(projects != null && !projects.isEmpty()){
         <button class="arrow right" onclick="slide(this,1)">❯</button>
     </div>
 
-    <p class="github">
-        <a href="<%= p.getGithubLink() %>" target="_blank">View GitHub Project</a>
-    </p>
+  <div class="project-links">
+    <% if (p.getGithubLink() != null && !p.getGithubLink().trim().isEmpty()) { %>
+        <p class="project-link-text">
+            🔗 <a href="<%= p.getGithubLink() %>" target="_blank">View Project</a>
+        </p>
+    <% } %>
 
-    <p><b>Submitted by:</b> <%= p.getStudentEmail() %></p>
+    <% if (p.getGithubProfile() != null && !p.getGithubProfile().trim().isEmpty()) { %>
+        <p class="project-link-text">
+            👤 <a href="<%= p.getGithubProfile() %>" target="_blank">GitHub Profile</a>
+        </p>
+    <% } %>
+</div>
+
+
+
+    <p class="submitted-by"><b>Submitted by:</b> <%= p.getStudentEmail() %></p>
 
     <div class="actions">
         <a href="editProject?id=<%= p.getId() %>" class="action-btn edit-btn">✏ Edit</a>
 
-        <form action="deleteProject" method="post" style="display:inline;">
+        <form action="deleteProject" method="post" class="delete-form">
             <input type="hidden" name="projectId" value="<%= p.getId() %>">
             <button type="submit" class="action-btn delete-btn"
                     onclick="return confirm('Are you sure you want to delete this project?');">
@@ -112,84 +151,84 @@ if(projects != null && !projects.isEmpty()){
         </form>
     </div>
 
-    <div class="project-section">
-    <h3>Project Feedback Summary</h3>
-    <div class="actions feedback-actions">
-    <span class="like-count">👍 <%= likeCount %> Likes</span>
-
-    <button type="button" class="feedback-chip"
-        onclick="openFeedbackSection('comments-<%= p.getId() %>')">
-        💬 <%= commentCount %> Comments
+    <div class="feedback-summary">
+    
+    <button type="button" class="summary-item like-item" disabled>
+        👍 <%= likeCount %> Likes
     </button>
 
-    <button type="button" class="feedback-chip"
-        onclick="openFeedbackSection('reviews-<%= p.getId() %>')">
-        ⭐ <%= reviewCount %> Reviews
+    <button type="button" class="summary-item"
+        onclick="toggleSection('comments-<%= p.getId() %>')">
+        💬 Comments (<%= commentCount %>)
     </button>
 
-    <span class="like-count">📊 <%= String.format("%.1f", avgRating) %> / 5</span>
-</div>
+    <button type="button" class="summary-item"
+        onclick="toggleSection('reviews-<%= p.getId() %>')">
+        ⭐ Reviews (<%= reviewCount %>)
+    </button>
+
 </div>
 
-<div class="project-section collapsed" id="comments-<%= p.getId() %>">
-    <h3>Comments Received (<%= commentCount %>)</h3>
+<div class="project-section feedback-detail" id="comments-<%= p.getId() %>">
+        <h3>Comments Received (<%= commentCount %>)</h3>
 
-    <div class="comment-list">
-        <%
-        if(comments != null && !comments.isEmpty()){
-            for(Comment c : comments){
-        %>
-            <div class="comment-box">
-                <p><b><%= c.getUserEmail() %></b></p>
-                <p><%= c.getComment() %></p>
-            </div>
-        <%
+        <div class="comment-list">
+            <%
+            if(comments != null && !comments.isEmpty()){
+                for(Comment c : comments){
+            %>
+                <div class="comment-box">
+                    <p><b><%= c.getUserEmail() %></b></p>
+                    <p><%= c.getComment() %></p>
+                </div>
+            <%
+                }
+            } else {
+            %>
+                <p class="no-comment">No comments received yet.</p>
+            <%
             }
-        } else {
-        %>
-            <p class="no-comment">No comments received yet.</p>
-        <%
-        }
-        %>
+            %>
+        </div>
     </div>
-</div>
-<div class="project-section collapsed" id="reviews-<%= p.getId() %>">
-    <h3>
-        Reviews Received (<%= reviewCount %>) |
-        Average Rating: <%= String.format("%.1f", avgRating) %> / 5
-    </h3>
 
-    <div class="review-list">
-        <%
-        if(reviews != null && !reviews.isEmpty()){
-            for(Review r : reviews){
-        %>
-            <div class="review-box">
-                <p>
-                    <b><%= r.getReviewerEmail() %></b> -
-                    <%
-                    int rating = r.getRating();
-                    for(int i = 1; i <= 5; i++){
-                        if(i <= rating){
-                    %>★<%
-                        } else {
-                    %>☆<%
+ <div class="project-section feedback-detail" id="reviews-<%= p.getId() %>">
+        <h3>
+            Reviews Received (<%= reviewCount %>) |
+            Average Rating: <%= String.format("%.1f", avgRating) %> / 5
+        </h3>
+
+        <div class="review-list">
+            <%
+            if(reviews != null && !reviews.isEmpty()){
+                for(Review r : reviews){
+            %>
+                <div class="review-box">
+                    <p>
+                        <b><%= r.getReviewerEmail() %></b> -
+                        <%
+                        int rating = r.getRating();
+                        for(int i = 1; i <= 5; i++){
+                            if(i <= rating){
+                        %>★<%
+                            } else {
+                        %>☆<%
+                            }
                         }
-                    }
-                    %>
-                </p>
-                <p><%= r.getReviewText() %></p>
-            </div>
-        <%
+                        %>
+                    </p>
+                    <p><%= r.getReviewText() %></p>
+                </div>
+            <%
+                }
+            } else {
+            %>
+                <p class="no-review">No reviews received yet.</p>
+            <%
             }
-        } else {
-        %>
-            <p class="no-review">No reviews received yet.</p>
-        <%
-        }
-        %>
+            %>
+        </div>
     </div>
-</div>
 
 </div>
 
@@ -197,9 +236,7 @@ if(projects != null && !projects.isEmpty()){
     }
 } else {
 %>
-
 <h3 style="text-align:center; margin-top:40px;">No projects uploaded yet.</h3>
-
 <%
 }
 %>
@@ -209,7 +246,7 @@ if(projects != null && !projects.isEmpty()){
     <img id="popupImg">
 </div>
 
-<script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
+
 <script>
 setTimeout(function () {
     var msg = document.querySelector(".success-msg");
@@ -218,6 +255,8 @@ setTimeout(function () {
     }
 }, 3000);
 </script>
+<script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
+<script src="<%=request.getContextPath()%>/js/myProject.js"></script>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 </body>
 </html>

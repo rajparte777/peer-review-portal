@@ -12,6 +12,10 @@
 
 <nav class="navbar">
 <h2>PeerReview</h2>
+<ul>
+       
+        <li><a href="dashboard.jsp">Dash Board</a></li>
+    </ul>
 </nav>
 
 <div class="form-container">
@@ -24,9 +28,13 @@
     
     <textarea name="description" placeholder="Description" required></textarea>
     
-    <input type="url" name="github" placeholder="GitHub Link (Optional)" >
+   <label>GitHub Project Link</label>
+   <input type="url" name="githubLink" placeholder="Enter project GitHub link (optional)">
+
+   <label>GitHub Profile Link</label>
+   <input type="url" name="githubProfile" placeholder="Enter GitHub profile link (optional)">
     
-    <input type="email" name="email" placeholder="Your Email" required>
+    <!-- <input type="email" name="email" placeholder="Your Email" required> -->
     <p>Select multiple Img using control & select </p>
     <label>Upload Images / Video</label>
  <input type="file" name="mediaFiles" multiple accept="image/*,video/*">

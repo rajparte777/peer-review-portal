@@ -8,6 +8,7 @@ public class Project {
     private String title;
     private String description;
     private String githubLink;
+    private String githubProfile;
     private String studentEmail;
 
     private List<String[]> mediaList; // [file_name, media_type]
@@ -42,6 +43,14 @@ public class Project {
 
     public void setGithubLink(String githubLink) {
         this.githubLink = githubLink;
+    }
+
+    public String getGithubProfile() {
+        return githubProfile;
+    }
+
+    public void setGithubProfile(String githubProfile) {
+        this.githubProfile = githubProfile;
     }
 
     public String getStudentEmail() {

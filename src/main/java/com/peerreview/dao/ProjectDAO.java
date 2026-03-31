@@ -19,13 +19,14 @@ public class ProjectDAO {
         try {
             Connection conn = DBConnection.getConnection();
 
-            String sql = "INSERT INTO projects(title, description, github_link, student_email) VALUES(?, ?, ?, ?)";
+            String sql = "INSERT INTO projects(title, description, github_link, student_email, github_profile) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, project.getTitle());
             ps.setString(2, project.getDescription());
             ps.setString(3, project.getGithubLink());
             ps.setString(4, project.getStudentEmail());
+            ps.setString(5, project.getGithubProfile());
 
             int row = ps.executeUpdate();
 
@@ -81,6 +82,7 @@ public class ProjectDAO {
                 p.setTitle(rs.getString("title"));
                 p.setDescription(rs.getString("description"));
                 p.setGithubLink(rs.getString("github_link"));
+                p.setGithubProfile(rs.getString("github_profile"));
                 p.setStudentEmail(rs.getString("student_email"));
 
                 // load media list
@@ -116,6 +118,7 @@ public class ProjectDAO {
                 p.setTitle(rs.getString("title"));
                 p.setDescription(rs.getString("description"));
                 p.setGithubLink(rs.getString("github_link"));
+                p.setGithubProfile(rs.getString("github_profile"));
                 p.setStudentEmail(rs.getString("student_email"));
 
                 // load media list
@@ -151,6 +154,7 @@ public class ProjectDAO {
                 p.setTitle(rs.getString("title"));
                 p.setDescription(rs.getString("description"));
                 p.setGithubLink(rs.getString("github_link"));
+                p.setGithubProfile(rs.getString("github_profile"));
                 p.setStudentEmail(rs.getString("student_email"));
 
                 // load media list
@@ -186,6 +190,7 @@ public class ProjectDAO {
                 p.setTitle(rs.getString("title"));
                 p.setDescription(rs.getString("description"));
                 p.setGithubLink(rs.getString("github_link"));
+                p.setGithubProfile(rs.getString("github_profile"));
                 p.setStudentEmail(rs.getString("student_email"));
 
                 // load media list
@@ -206,14 +211,15 @@ public class ProjectDAO {
         try {
             Connection conn = DBConnection.getConnection();
 
-            String sql = "UPDATE projects SET title = ?, description = ?, github_link = ? WHERE id = ? AND student_email = ?";
+            String sql = "UPDATE projects SET title = ?, description = ?, github_link = ?, github_profile = ? WHERE id = ? AND student_email = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, project.getTitle());
             ps.setString(2, project.getDescription());
             ps.setString(3, project.getGithubLink());
-            ps.setInt(4, project.getId());
-            ps.setString(5, project.getStudentEmail());
+            ps.setString(4, project.getGithubProfile());
+            ps.setInt(5, project.getId());
+            ps.setString(6, project.getStudentEmail());
 
             int row = ps.executeUpdate();
 
@@ -284,8 +290,7 @@ public class ProjectDAO {
         return status;
     }
 
-    
-    //real database value
+    // REAL DATABASE VALUE
     public int getTotalProjects() {
         int count = 0;
 
@@ -305,6 +310,7 @@ public class ProjectDAO {
 
         return count;
     }
+
     // GET MEDIA BY PROJECT ID
     public List<String[]> getMediaByProjectId(int projectId) {
         List<String[]> mediaList = new ArrayList<>();

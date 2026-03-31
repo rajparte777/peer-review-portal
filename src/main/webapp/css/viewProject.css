@@ -59,7 +59,7 @@
 }
 
 .view-project-page .project-card a {
-   color :#f6f6f6;
+
     text-decoration: none;
     font-weight: 700;
     word-break: break-word;
@@ -163,6 +163,11 @@
 /* =========================
    ACTIONS
 ========================= */
+.project-links a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 .view-project-page .actions {
     margin-top: 16px;
     margin-bottom: 12px;
@@ -391,6 +396,28 @@
     font-weight: 700;
 }
 
+
+
+
+.project-desc {
+    font-size: 15px;
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 14px;
+}
+
+.read-more-btn {
+    margin-left: 8px;
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.read-more-btn:hover {
+    text-decoration: underline;
+}
 
 /* =========================
    RESPONSIVE
