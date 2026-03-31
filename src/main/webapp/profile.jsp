@@ -25,12 +25,30 @@
 <div class="profile-wrapper">
 
     <div class="profile-header-card">
-        <div class="profile-avatar">👤</div>
+        <div class="profile-avatar">
+    <%
+    String profilePhoto = (String) request.getAttribute("profilePhoto");
+    if (profilePhoto != null && !profilePhoto.trim().isEmpty()) {
+    %>
+        <img src="<%=request.getContextPath()%>/profilePhoto?file=<%= profilePhoto %>" alt="Profile Photo">
+    <%
+    } else {
+    %>
+        <span>👤</span>
+    <%
+    }
+    %>
+</div>
 
         <div class="profile-main-info">
             <h1>${name}</h1>
             <p class="profile-email">${email}</p>
             <p class="profile-role">PeerReview Portal Member</p>
+
+            <form action="uploadProfilePhoto" method="post" enctype="multipart/form-data" class="photo-upload-form">
+                <input type="file" name="profilePhoto" accept="image/*" required>
+                <button type="submit">Upload Photo</button>
+            </form>
         </div>
     </div>
 

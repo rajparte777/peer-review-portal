@@ -152,5 +152,74 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+let popupMediaItems = [];
+let popupIndex = 0;
+
+function openProjectPopup(clickedItem) {
+    const sliderTrack = clickedItem.closest(".slider").querySelector(".slider-track");
+    popupMediaItems = Array.from(sliderTrack.querySelectorAll(".media-item"));
+
+    popupIndex = popupMediaItems.indexOf(clickedItem);
+    showPopupItem(popupIndex);
+
+    document.getElementById("popup").style.display = "flex";
+}
+
+function showPopupItem(index) {
+    const popupImg = document.getElementById("popupImg");
+    const popupVideo = document.getElementById("popupVideo");
+
+    const currentItem = popupMediaItems[index];
+
+    if (!currentItem) return;
+
+    if (currentItem.tagName.toLowerCase() === "img") {
+        popupImg.src = currentItem.src;
+        popupImg.style.display = "block";
+
+        popupVideo.pause();
+        popupVideo.removeAttribute("src");
+        popupVideo.style.display = "none";
+    } else if (currentItem.tagName.toLowerCase() === "video") {
+        const source = currentItem.querySelector("source");
+
+        if (source) {
+            popupVideo.src = source.src;
+            popupVideo.style.display = "block";
+            popupVideo.load();
+        }
+
+        popupImg.style.display = "none";
+        popupImg.removeAttribute("src");
+    }
+}
+
+function slidePopup(direction) {
+    if (popupMediaItems.length === 0) return;
+
+    popupIndex += direction;
+
+    if (popupIndex < 0) {
+        popupIndex = popupMediaItems.length - 1;
+    } else if (popupIndex >= popupMediaItems.length) {
+        popupIndex = 0;
+    }
+
+    showPopupItem(popupIndex);
+}
+
+function closePopup() {
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const popupVideo = document.getElementById("popupVideo");
+
+    popup.style.display = "none";
+
+    popupImg.removeAttribute("src");
+
+    popupVideo.pause();
+    popupVideo.removeAttribute("src");
+    popupVideo.style.display = "none";
+}
 
 

@@ -251,6 +251,24 @@
     font-style: italic;
 }
 
+.media-item {
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.slider {
+    position: relative;
+}
+
+.slider-track {
+    position: relative;
+}
+
+.arrow {
+    z-index: 3;
+}
+
 /* responsive */
 @media (max-width: 768px) {
     .my-projects-title {

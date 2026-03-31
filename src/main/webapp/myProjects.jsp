@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 <nav class="navbar">
     <h2 class="logo">PeerReview</h2>
     <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.jsp">Profile</a></li>
         <li><a href="dashboard.jsp">Dash Board</a></li>
         <li><a href="viewProjects">View Projects</a></li>
         <li><a href="logout">Logout</a></li>
@@ -103,14 +103,14 @@ if (fullDesc != null && fullDesc.length() > 180) {
                     if ("image".equalsIgnoreCase(mediaType)) {
             %>
                         <img class="media-item"
-                             src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
-                             onclick="openPopup(this.src)">
-            <%
+     src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
+     onclick="openProjectPopup(this)">
+     
                     } else if ("video".equalsIgnoreCase(mediaType)) {
             %>
-                        <video class="media-item" controls>
-                            <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
-                        </video>
+                       <video class="media-item" controls onclick="openProjectPopup(this)">
+    <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
+</video>
             <%
                     }
                 }
@@ -240,12 +240,18 @@ if (fullDesc != null && fullDesc.length() > 180) {
 <%
 }
 %>
-
 <div id="popup" class="popup">
-    <span onclick="closePopup()">✖</span>
-    <img id="popupImg">
-</div>
+    <span class="popup-close" onclick="closePopup()">✖</span>
 
+    <button type="button" class="popup-arrow popup-left" onclick="slidePopup(-1)">❮</button>
+
+    <div class="popup-content">
+        <img id="popupImg" alt="Popup Image" style="display:none;">
+        <video id="popupVideo" controls style="display:none;"></video>
+    </div>
+
+    <button type="button" class="popup-arrow popup-right" onclick="slidePopup(1)">❯</button>
+</div>
 
 <script>
 setTimeout(function () {

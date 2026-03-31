@@ -123,6 +123,51 @@ public class UserDAO {
 
         return count;
     }
-    //user profile
-    
+    // get img by email
+    public String getProfilePhotoByEmail(String email) {
+        String photo = null;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT profile_photo FROM users WHERE email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                photo = rs.getString("profile_photo");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return photo;
+    }
+    //update img
+    public boolean updateProfilePhoto(String email, String fileName) {
+        boolean status = false;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "UPDATE users SET profile_photo = ? WHERE email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, fileName);
+            ps.setString(2, email);
+
+            int row = ps.executeUpdate();
+
+            if (row > 0) {
+                status = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return status;
+    }
 }

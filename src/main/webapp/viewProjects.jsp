@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
     <h2 class="logo">PeerReview</h2>
 
     <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.jsp">Profile</a></li>
      
      <li><a href="dashboard.jsp">Dash Board</a></li>
         <li><a href="myProjects">My Projects</a></li>
@@ -56,7 +56,32 @@ if(projects != null && !projects.isEmpty()){
 <div class="project-card">
 
     <h2><%= p.getTitle() %></h2>
-    <p><%= p.getDescription() %></p>
+   <%
+String fullDesc = p.getDescription();
+String shortDesc = fullDesc;
+
+if (fullDesc != null && fullDesc.length() > 180) {
+    shortDesc = fullDesc.substring(0, 180) + "...";
+}
+%>
+
+<p class="project-desc">
+    <span id="short-desc-<%= p.getId() %>" <%= (fullDesc != null && fullDesc.length() > 180) ? "" : "style='display:inline;'" %>>
+        <%= shortDesc %>
+    </span>
+
+    <% if (fullDesc != null && fullDesc.length() > 180) { %>
+        <span id="full-desc-<%= p.getId() %>" style="display:none;">
+            <%= fullDesc %>
+        </span>
+
+        <a href="javascript:void(0);" class="read-more-btn"
+           onclick="toggleDescription(<%= p.getId() %>)"
+           id="toggle-btn-<%= p.getId() %>">
+            Read More
+        </a>
+    <% } %>
+</p>
 
     <div class="slider">
         <button class="arrow left" onclick="slide(this,-1)">❮</button>
@@ -73,14 +98,14 @@ if(projects != null && !projects.isEmpty()){
                     if ("image".equalsIgnoreCase(mediaType)) {
             %>
                         <img class="media-item"
-                             src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
-                             onclick="openPopup(this.src)">
+     src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
+     onclick="openProjectPopup(this)">
             <%
                     } else if ("video".equalsIgnoreCase(mediaType)) {
             %>
-                        <video class="media-item" controls>
-                            <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
-                        </video>
+                       <video class="media-item" controls onclick="openProjectPopup(this)">
+    <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
+</video>
             <%
                     }
                 }
@@ -237,13 +262,23 @@ if(projects != null && !projects.isEmpty()){
 %>
 
 <div id="popup" class="popup">
-    <span onclick="closePopup()">✖</span>
-    <img id="popupImg">
+    <span class="popup-close" onclick="closePopup()">✖</span>
+
+    <button class="popup-arrow popup-left" onclick="slidePopup(-1)">❮</button>
+
+    <div class="popup-content">
+        <img id="popupImg" style="display:none;">
+        <video id="popupVideo" controls style="display:none;"></video>
+    </div>
+
+    <button class="popup-arrow popup-right" onclick="slidePopup(1)">❯</button>
 </div>
 
 <script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
 <script src="<%=request.getContextPath()%>/js/likeProject.js"></script>
 <script src="<%=request.getContextPath()%>/js/projectInteraction.js"></script>
+<script src="<%=request.getContextPath()%>/js/myProject.js"></script>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+
 </body>
 </html>

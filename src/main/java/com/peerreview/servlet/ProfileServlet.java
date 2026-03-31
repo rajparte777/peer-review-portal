@@ -34,6 +34,8 @@ public class ProfileServlet extends HttpServlet {
         ProjectDAO projectDAO = new ProjectDAO();
 
         String name = userDAO.getUserNameByEmail(email);
+        String profilePhoto = userDAO.getProfilePhotoByEmail(email);
+
         int projectCount = projectDAO.getProjectCountByEmail(email);
         int totalLikes = projectDAO.getTotalLikesByEmail(email);
         int totalReviews = projectDAO.getTotalReviewsByEmail(email);
@@ -43,6 +45,7 @@ public class ProfileServlet extends HttpServlet {
 
         request.setAttribute("name", name);
         request.setAttribute("email", email);
+        request.setAttribute("profilePhoto", profilePhoto);
         request.setAttribute("projectCount", projectCount);
         request.setAttribute("totalLikes", totalLikes);
         request.setAttribute("totalReviews", totalReviews);
