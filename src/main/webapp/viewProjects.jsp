@@ -273,12 +273,12 @@ if (fullDesc != null && fullDesc.length() > 180) {
 
     <button class="popup-arrow popup-right" onclick="slidePopup(1)">❯</button>
 </div>
+<script defer src="<%=request.getContextPath()%>/js/script.js"></script>
+<script defer src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
+<script defer src="<%=request.getContextPath()%>/js/likeProject.js"></script>
+<script defer src="<%=request.getContextPath()%>/js/projectInteraction.js"></script>
+<script defer src="<%=request.getContextPath()%>/js/myProject.js"></script>
 
-<script src="<%=request.getContextPath()%>/js/projectSlider.js"></script>
-<script src="<%=request.getContextPath()%>/js/likeProject.js"></script>
-<script src="<%=request.getContextPath()%>/js/projectInteraction.js"></script>
-<script src="<%=request.getContextPath()%>/js/myProject.js"></script>
-<script src="<%=request.getContextPath()%>/js/script.js"></script>
 
 </body>
 </html>

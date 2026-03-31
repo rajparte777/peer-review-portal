@@ -24,8 +24,9 @@ pageEncoding="UTF-8"%>
 <nav class="navbar">
     <h2 class="logo">PeerReview</h2>
     <ul>
-        <li><a href="profile.jsp">Profile</a></li>
+        
         <li><a href="dashboard.jsp">Dash Board</a></li>
+        <li><a href="submitProject.html">Submit Project</a></li>
         <li><a href="viewProjects">View Projects</a></li>
         <li><a href="logout">Logout</a></li>
     </ul>
@@ -91,32 +92,32 @@ if (fullDesc != null && fullDesc.length() > 180) {
     <div class="slider">
         <button class="arrow left" onclick="slide(this,-1)">❮</button>
 
-        <div class="slider-track">
-            <%
-            List<String[]> mediaList = p.getMediaList();
-            if (mediaList != null && !mediaList.isEmpty()) {
-                for (String[] media : mediaList) {
-                    String fileName = media[0];
-                    String mediaType = media[1];
-                    String encodedFile = URLEncoder.encode(fileName, "UTF-8");
+    <div class="slider-track">
+    <%
+    List<String[]> mediaList = p.getMediaList();
+    if (mediaList != null && !mediaList.isEmpty()) {
+        for (String[] media : mediaList) {
+            String fileName = media[0];
+            String mediaType = media[1];
+            String encodedFile = URLEncoder.encode(fileName, "UTF-8");
 
-                    if ("image".equalsIgnoreCase(mediaType)) {
-            %>
-                        <img class="media-item"
-     src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
-     onclick="openProjectPopup(this)">
-     
-                    } else if ("video".equalsIgnoreCase(mediaType)) {
-            %>
-                       <video class="media-item" controls onclick="openProjectPopup(this)">
-    <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
-</video>
-            <%
-                    }
-                }
+            if ("image".equalsIgnoreCase(mediaType)) {
+    %>
+                <img class="media-item"
+                     src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>"
+                     onclick="openProjectPopup(this)">
+    <%
+            } else if ("video".equalsIgnoreCase(mediaType)) {
+    %>
+                <video class="media-item" controls onclick="openProjectPopup(this)">
+                    <source src="<%=request.getContextPath()%>/uploads?file=<%=encodedFile%>">
+                </video>
+    <%
             }
-            %>
-        </div>
+        }
+    }
+    %>
+</div>
 
         <button class="arrow right" onclick="slide(this,1)">❯</button>
     </div>
