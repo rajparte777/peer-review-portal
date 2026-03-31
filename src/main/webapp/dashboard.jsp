@@ -41,9 +41,10 @@ List<Project> recentProjects = projectDAO.getAllProjects();
 
     <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="submitProject.html">Submit Project</a></li>
-        <li><a href="myProjects">My Projects</a></li>
+      <!--   <li><a href="submitProject.html">Submit Project</a></li>
+        <li><a href="myProjects">My Projects</a></li> -->
         <li><a href="viewProjects">View Projects</a></li>
+        <li><a href="profile.jsp">Profile</a><li>
         <li><a href="logout">Logout</a></li>
     </ul>
 </nav>

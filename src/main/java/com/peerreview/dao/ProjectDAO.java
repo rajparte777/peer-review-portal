@@ -337,4 +337,99 @@ public class ProjectDAO {
 
         return mediaList;
     }
+    //profile user
+    public int getProjectCountByEmail(String email) {
+        int count = 0;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT COUNT(*) FROM projects WHERE student_email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    // profile feature
+    public int getTotalLikesByEmail(String email) {
+        int totalLikes = 0;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT COUNT(*) FROM likes l " +
+                         "JOIN projects p ON l.project_id = p.id " +
+                         "WHERE p.student_email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalLikes = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return totalLikes;
+    }
+
+    public int getTotalReviewsByEmail(String email) {
+        int totalReviews = 0;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT COUNT(*) FROM reviews r " +
+                         "JOIN projects p ON r.project_id = p.id " +
+                         "WHERE p.student_email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalReviews = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return totalReviews;
+    }
+
+    public double getAverageRatingByEmail(String email) {
+        double avgRating = 0.0;
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT AVG(r.rating) FROM reviews r " +
+                         "JOIN projects p ON r.project_id = p.id " +
+                         "WHERE p.student_email = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                avgRating = rs.getDouble(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return avgRating;
+    }
 }

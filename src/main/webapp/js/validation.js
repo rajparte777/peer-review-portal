@@ -68,16 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
 // =========================
 // FORM VALIDATION
 // =========================
+
 function validateForm() {
 
     let emailInput = document.getElementById("email");
     let passwordInput = document.getElementById("password");
     let errorMsg = document.getElementById("errorMsg");
 
-    let email = emailInput.value.trim().toLowerCase();
+    let email = emailInput.value.trim().toLowerCase(); // ✅ lowercase
     let password = passwordInput.value.trim();
 
-    emailInput.value = email;
+    emailInput.value = email; // ✅ update field
 
     errorMsg.innerText = "";
 
